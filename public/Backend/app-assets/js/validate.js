@@ -3013,3 +3013,142 @@ $("#ContactDetailssettings").validate({
 
 
 });
+
+
+
+//Gallery setting form Validate
+
+$("#gallerysettings").validate({
+  
+  submitHandler: function(form) {
+    form.submit();
+  },
+  ignore: [],
+  rules: {
+    'group_name': {
+      required: true,
+        remote:{
+             url: "/gallery/varifyname",
+             type: "GET",
+             data: {
+                group_name: function() {
+                return $( "#group_name" ).val();
+              }
+            }
+        }
+    },
+     'image[]': {
+     required: true,
+    },
+
+ 
+
+  },
+
+   //For custom messages
+      messages: {
+        group_name:{
+            remote: 'The Group Name is already in use!'
+        },
+        
+
+      },
+
+   errorElement : 'div',
+      errorPlacement: function(error, element) {
+        var placement = $(element).data('error');
+        if (placement) {
+          $(placement).append(error)
+        } else {
+            error.insertAfter(element);
+        }
+    },
+    
+
+
+});
+//Gallery Edit setting form Validate
+$("#galleryEditsettings").validate({
+  
+  submitHandler: function(form) {
+    form.submit();
+  },
+  ignore: [],
+  rules: {
+    'group_name': {
+      required: true,
+       remote:{
+             url: "/gallery/varifyname",
+             type: "GET",
+             data: {
+                slug:$( "#slug" ).val(),
+                group_name: function() {
+                return $( "#group_name" ).val();
+
+              }
+            }
+
+
+        }
+        
+    },
+     'image[]': {
+     required: false,
+    },
+
+ 
+
+  },
+
+      //For custom messages
+      messages: {
+        group_name:{
+            remote: 'The Group Name is already in use!'
+        },
+        
+
+      },
+
+
+   errorElement : 'div',
+      errorPlacement: function(error, element) {
+        var placement = $(element).data('error');
+        if (placement) {
+          $(placement).append(error)
+        } else {
+            error.insertAfter(element);
+        }
+    },
+    
+
+
+});
+
+
+//privacy-policy form Validate
+
+$(document).ready(function(){
+
+    $("#privacypolicysubmit").click( function(e) {
+        var text = tinyMCE.activeEditor.getContent();
+        if(text === "" || text === null){
+            $("#Valid").html("<span>This field is required</span>");
+            return false;
+        } else {
+            $("#Valid").html("");
+        }
+   });
+
+     $("#termsconditionsettings").click( function(e) {
+        var text = tinyMCE.activeEditor.getContent();
+        if(text === "" || text === null){
+            $("#Valid").html("<span>This field is required</span>");
+            return false;
+        } else {
+            $("#Valid").html("");
+        }
+   });
+
+
+
+});

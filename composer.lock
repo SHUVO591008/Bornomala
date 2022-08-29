@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "26e3ffc3e878d554d90405c53115d6d1",
+    "content-hash": "159e174ec05161746bf05fac7ed2e17a",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5381,16 +5381,16 @@
         },
         {
             "name": "webklex/laravel-imap",
-            "version": "2.4.0",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Webklex/laravel-imap.git",
-                "reference": "97c480cc2dd6b76859c5e21ccb4fa6659b7ad6de"
+                "reference": "cc316c76c3eabed137fa264949abb0814a2de2b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Webklex/laravel-imap/zipball/97c480cc2dd6b76859c5e21ccb4fa6659b7ad6de",
-                "reference": "97c480cc2dd6b76859c5e21ccb4fa6659b7ad6de",
+                "url": "https://api.github.com/repos/Webklex/laravel-imap/zipball/cc316c76c3eabed137fa264949abb0814a2de2b1",
+                "reference": "cc316c76c3eabed137fa264949abb0814a2de2b1",
                 "shasum": ""
             },
             "require": {
@@ -5399,7 +5399,7 @@
                 "ext-mbstring": "*",
                 "laravel/framework": ">=5.0.0",
                 "php": ">=5.5.9",
-                "webklex/php-imap": "^2.4"
+                "webklex/php-imap": "^2.2"
             },
             "type": "library",
             "extra": {
@@ -5445,9 +5445,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Webklex/laravel-imap/issues",
-                "source": "https://github.com/Webklex/laravel-imap/tree/2.4.0"
+                "source": "https://github.com/Webklex/laravel-imap/tree/2.2.0"
             },
-            "time": "2021-01-09T19:46:21+00:00"
+            "time": "2020-10-16T14:29:33+00:00"
         },
         {
             "name": "webklex/php-imap",

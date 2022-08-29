@@ -170,6 +170,7 @@ return [
         Yoeunes\Toastr\ToastrServiceProvider::class,
         Jorenvh\Share\Providers\ShareServiceProvider::class,
         Stevebauman\Location\LocationServiceProvider::class,
+
      
 
         /*

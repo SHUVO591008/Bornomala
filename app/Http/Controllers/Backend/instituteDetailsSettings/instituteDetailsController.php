@@ -183,6 +183,9 @@ class instituteDetailsController extends Controller
             
 
 
+        }else{
+            toastr()->error('Opps!Something went wrong.');
+            return redirect()->back();
         }
     }
 

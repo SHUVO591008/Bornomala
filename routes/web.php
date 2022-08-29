@@ -42,6 +42,9 @@ Route::get('/upcoming', 'Frontend\Home\HomeController@upcoming')->name('upcoming
 Route::get('/teacher', 'Frontend\Home\HomeController@teacher')->name('teacher');
 Route::get('/about', 'Frontend\Home\HomeController@about')->name('about');
 Route::get('/contact', 'Frontend\Home\HomeController@contact')->name('contact');
+Route::get('/gallery', 'Frontend\Home\HomeController@gallery')->name('gallery');
+Route::get('/privacy-policy', 'Frontend\Home\HomeController@PrivacyPolicy')->name('PrivacyPolicy');
+Route::get('/Terms-And-Conditions', 'Frontend\Home\HomeController@TermsConditions')->name('TermsConditions');
 
 Route::get('users/varifyusername','Backend\Ajax\AjaxController@varifyuserName');
 Route::get('users/varifyemail','Backend\Ajax\AjaxController@varifyemail');
@@ -250,14 +253,52 @@ Route::group(['middleware' =>'auth'], function () {
             //Contact Route
             Route::get('/message', 'Backend\ContactDetailsSettings\ContactController@add')->name('contact.message');
             Route::get('/view/{id}', 'Backend\ContactDetailsSettings\ContactController@show')->name('contact.view');
-
-            Route::get('/edit/{id}', 'Backend\ContactDetailsSettings\ContactController@edit')->name('contact.edit');
-            Route::post('/update/{id}', 'Backend\ContactDetailsSettings\ContactController@update')->name('contact.update');
-            Route::post('/status', 'Backend\ContactDetailsSettings\ContactController@status')->name('contact.status');
             Route::get('/delete/{id}', 'Backend\ContactDetailsSettings\ContactController@destroy')->name('contact.delete');
 
 
         });
+
+
+          //Gallery Details
+        Route::prefix('gallery')->group(function () {
+            Route::get('/add', 'Backend\gallerySettings\GalleryController@add')->name('gallery.add');
+            Route::post('/add', 'Backend\gallerySettings\GalleryController@store')->name('gallery.store');
+            Route::get('/view/{slug}', 'Backend\gallerySettings\GalleryController@view')->name('gallery.view');
+            Route::get('/edit/{slug}', 'Backend\gallerySettings\GalleryController@edit')->name('gallery.edit');
+            Route::post('/update/{slug}', 'Backend\gallerySettings\GalleryController@update')->name('gallery.update');
+            Route::get('/delete/{slug}', 'Backend\gallerySettings\GalleryController@destroy')->name('gallery.delete');
+            Route::get('varifyname','Backend\Ajax\AjaxController@varifyGroupName');
+
+        });
+
+
+         //Privacy-Policy Details
+        Route::prefix('privacy-policy')->group(function () {
+            Route::get('/add', 'Backend\privacypolicySettings\PrivacyPolicyController@add')->name('privacypolicy.add');
+            Route::post('/add', 'Backend\privacypolicySettings\PrivacyPolicyController@store')->name('privacypolicy.store');
+            Route::get('/edit/{id}', 'Backend\privacypolicySettings\PrivacyPolicyController@edit')->name('privacypolicy.edit');
+            Route::post('/update/{id}', 'Backend\privacypolicySettings\PrivacyPolicyController@update')->name('privacypolicy.update');
+            Route::get('/delete/{id}', 'Backend\privacypolicySettings\PrivacyPolicyController@destroy')->name('privacypolicy.delete');
+        });
+
+
+        //Terms and Conditions Details
+        Route::prefix('terms-conditions')->group(function () {
+            Route::get('/add', 'Backend\termsconditionsSettings\TermsConditionsController@add')->name('termsconditions.add');
+            Route::post('/add', 'Backend\termsconditionsSettings\TermsConditionsController@store')->name('termsconditions.store');
+            Route::get('/edit/{id}', 'Backend\termsconditionsSettings\TermsConditionsController@edit')->name('termsconditions.edit');
+            Route::post('/update/{id}', 'Backend\termsconditionsSettings\TermsConditionsController@update')->name('termsconditions.update');
+            Route::get('/delete/{id}', 'Backend\termsconditionsSettings\TermsConditionsController@destroy')->name('termsconditions.delete');
+        });
+
+          //Mail Settings
+        Route::prefix('mail')->group(function () {
+            Route::get('/add', 'Backend\mailSetting\MailSettingController@index')->name('mailSetting.add');
+            Route::post('/add', 'Backend\mailSetting\MailSettingController@store')->name('mailSetting.store');
+            Route::post('/update', 'Backend\mailSetting\MailSettingController@update')->name('mailSetting.update');
+
+        });
+
 
 
         //settings route

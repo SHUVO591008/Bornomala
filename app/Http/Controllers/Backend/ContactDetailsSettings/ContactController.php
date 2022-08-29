@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Crypt;
 use DB;
 use Location;
 use App\Helpers\UserSystemInfoHelper;
+use Mail;
 
 
 class ContactController extends Controller
@@ -41,7 +42,7 @@ class ContactController extends Controller
     {
          $this->middleware('auth');
 
-        return view('Backend\ConatctSettings\DetailsAdd');
+        return view('Backend\ContactSettings\DetailsAdd');
     }
 
     /**
@@ -203,8 +204,13 @@ class ContactController extends Controller
         $decryptedID = Crypt::decrypt($id);
 
         $data = contact::where('id',$decryptedID)->first();
+        if(!empty($data)){
+             return view('Backend\ContactSettings\view',compact('data'));
+         }else{
+            return redirect()->route('contact.message');
+         }
 
-        return view('Backend\ConatctSettings\view',compact('data'));
+       
     }
 
     /**
@@ -225,7 +231,7 @@ class ContactController extends Controller
 
                  $data1 = socialContact::get();
 
-                return view('Backend\ConatctSettings\DetailsAdd',compact('data','data1'));
+                return view('Backend\ContactSettings\DetailsAdd',compact('data','data1'));
 
             }catch (\Exception $e) {
                 
@@ -362,7 +368,7 @@ class ContactController extends Controller
     {
          $this->middleware('auth');
 
-        return view('Backend\ConatctSettings\message');
+        return view('Backend\ContactSettings\message');
     }
 
 
@@ -391,33 +397,80 @@ class ContactController extends Controller
                 'number' =>['required','numeric','min:11','regex:/(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/'],
             ]);
 
+          
                 try{
 
-                    $data = new contact();
-                    $data->name= $request->name;
-                    $data->email= $request->email;
-                    $data->mobile= $request->number;
-                    $data->text= $request->message;
-                    $data->ip= $ip->ip;
-                    $data->country=$ip->countryName;
-                    $data->city= $ip->cityName;
-                    $data->device=$getdevice;
-                    $data->save();
+
+                    $data = array(
+                        'name'=>$request->name,
+                        'email'=>$request->email,
+                        'mobile'=>$request->number,
+                        'text'=>$request->message,
+                        'ip'=>$ip->ip,
+                        'country'=>$ip->countryName,
+                        'city'=>$ip->cityName,
+                        'device'=>$getdevice,
+
+                    );
+
+                    Mail::send('Backend.ContactSettings.emialTamp', $data, function($message) use($request){
+                    $message->to($request->email);
+                     $username = 'Contact Message From '.$request->name;
+                    $message->subject($username);
+                    });
+
+                    if (!Mail::failures()) {
+                        $data = new contact();
+                        $data->name= $request->name;
+                        $data->email= $request->email;
+                        $data->mobile= $request->number;
+                        $data->text= $request->message;
+                        $data->ip= $ip->ip;
+                        $data->country=$ip->countryName;
+                        $data->city= $ip->cityName;
+                        $data->device=$getdevice;
+                        $data->save();
+
+                        toastr()->success('Message sent successfully.');
+                        return redirect()->route('contact');
+                    }
                   
                 
-                    toastr()->success('Message sent successfully.');
-                    return redirect()->route('contact');
+            }catch (\Exception $e) {
+                toastr()->error('Opps! Something went wrong.');
+                return redirect()->back();
+            }
 
-                }catch (\Exception $e) {
-                    toastr()->error('Opps! Something went wrong');
-                    return redirect()->back();
-                }
 
         }else{
 
             toastr()->error('Opps! Something went wrong');
             return redirect()->back();
 
+        }
+
+    }
+
+
+    public function destroy(Request $request,$id)
+    {
+        
+        if($request->isMethod('get')){
+
+            try{
+                $decrypted = Crypt::decrypt($id);
+                $data = contact::findOrFail($decrypted);
+                $data->delete();
+                toastr()->success('Data Deleted Successfully.');
+                return redirect()->route('contact.message');
+
+            }catch (\Exception $e) {
+                toastr()->error('Opps!Something went wrong.');
+                return redirect()->back();
+            }
+        }else{
+            toastr()->error('Opps!Something went wrong.');
+            return redirect()->back();
         }
 
     }

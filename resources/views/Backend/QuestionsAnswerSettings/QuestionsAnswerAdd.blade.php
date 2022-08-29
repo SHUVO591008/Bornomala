@@ -172,8 +172,6 @@ $qusAndans = qusAndans::latest()->get();
 
 
 
-                               
-
                                  <div style="text-align:center;border-style: dashed;color: black;padding: 10px;font-weight: 700;font-size: 18px;" class="">
 
                                     

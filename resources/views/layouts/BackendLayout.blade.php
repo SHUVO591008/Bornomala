@@ -55,6 +55,9 @@
     <!-- sweet-alert css -->
     <link rel="stylesheet" type="text/css" href="{{ asset("Backend/app-assets/css/sweet-alert/sweet-alert.min.css")}}">
 
+
+  
+
   <!-- Editor Plugin -->
     <style>
         .tox-notifications-container {
@@ -333,7 +336,7 @@
       <!-- User menu End-->
 
       <!-- Website customize menu-->
-      <li class="{{ request()->is('general/add') ? 'active' : '' || request()->is('general/edit/*') ? 'active' : '' || request()->is('general/socialedit/*') ? 'active' : '' || request()->is('general/view') ? 'active' : '' || request()->is('header/add') ? 'active' : '' || request()->is('header/edit/*') ? 'active' : '' ||  request()->is('news/add') ? 'active' : '' || request()->is('news/edit/*') ? 'active' : '' || request()->is('about/add') ? 'active' : '' ||request()->is('about/edit/*') ? 'active' : '' || request()->is('about/view/*') ? 'active' : '' ||request()->is('service/add') ? 'active' : '' || request()->is('service/edit/*') ? 'active' : '' ||request()->is('instituteDetails/add') ? 'active' : '' || request()->is('instituteDetails/edit/*') ? 'active' : '' ||  request()->is('slider/add') ? 'active' : '' || request()->is('slider/edit/*')? 'active' : '' || request()->is('slider/view/*') ? 'active' : '' || request()->is('settings/add') ? 'active' : '' || request()->is('settings/edit/*') ? 'active' : '' || request()->is('courseAdvertise/add') ? 'active' : '' || request()->is('courseAdvertise/edit/*') ? 'active' : '' ||  request()->is('QuestionsAns/add') ? 'active' : '' || request()->is('QuestionsAns/edit/*') ? 'active' : '' || request()->is('QuestionsAns/view') ? 'active' : '' ||  request()->is('social/add') ? 'active' : '' || request()->is('social/edit/*') ? 'active' : '' || request()->is('admin/details/add') ? 'active' : '' || request()->is('admin/details/edit/*') ? 'active' : '' ||request()->is('contact/details/add') ? 'active' : '' || request()->is('contact/details/edit/*') ? 'active' : '' ||  request()->is('contact/message') ? 'active' : '' }} bold">
+      <li class="{{ request()->is('general/add') ? 'active' : '' || request()->is('general/edit/*') ? 'active' : '' || request()->is('general/socialedit/*') ? 'active' : '' || request()->is('general/view') ? 'active' : '' || request()->is('header/add') ? 'active' : '' || request()->is('header/edit/*') ? 'active' : '' ||  request()->is('news/add') ? 'active' : '' || request()->is('news/edit/*') ? 'active' : '' || request()->is('about/add') ? 'active' : '' ||request()->is('about/edit/*') ? 'active' : '' || request()->is('about/view/*') ? 'active' : '' ||request()->is('service/add') ? 'active' : '' || request()->is('service/edit/*') ? 'active' : '' ||request()->is('instituteDetails/add') ? 'active' : '' || request()->is('instituteDetails/edit/*') ? 'active' : '' ||  request()->is('slider/add') ? 'active' : '' || request()->is('slider/edit/*')? 'active' : '' || request()->is('slider/view/*') ? 'active' : '' || request()->is('settings/add') ? 'active' : '' || request()->is('settings/edit/*') ? 'active' : '' || request()->is('courseAdvertise/add') ? 'active' : '' || request()->is('courseAdvertise/edit/*') ? 'active' : '' ||  request()->is('QuestionsAns/add') ? 'active' : '' || request()->is('QuestionsAns/edit/*') ? 'active' : '' || request()->is('QuestionsAns/view') ? 'active' : '' ||  request()->is('social/add') ? 'active' : '' || request()->is('social/edit/*') ? 'active' : '' || request()->is('admin/details/add') ? 'active' : '' || request()->is('admin/details/edit/*') ? 'active' : '' ||request()->is('contact/details/add') ? 'active' : '' || request()->is('contact/details/edit/*') ? 'active' : '' ||  request()->is('contact/message') ? 'active' : '' || request()->is('contact/view/*') ? 'active' : ''  || request()->is('gallery/add') ? 'active' : '' || request()->is('gallery/edit/*') ? 'active' : '' || request()->is('gallery/view/*') ? 'active' : '' || request()->is('privacy-policy/add') ? 'active' : '' || request()->is('privacy-policy/edit/*') ? 'active' : '' || request()->is('terms-conditions/add') ? 'active' : '' || request()->is('terms-conditions/edit/*') ? 'active' : '' || request()->is('mail/add') ? 'active' : ''}} bold">
 
 
         <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)"><i class="material-icons dp48">language</i><span class="menu-title" data-i18n="Website">Website Customize</span></a>
@@ -457,8 +460,20 @@
                 </div>
               </li>
 
-                <!-- Contact Details menu-->
-               <li class="{{ request()->is('contact/details/add') ? 'active' : '' || request()->is('contact/details/edit/*') ? 'active' : '' || request()->is('contact/message') ? 'active' : ''}}"><a class="collapsible-header waves-effect waves-cyan" href="JavaScript:void(0)"><i class="material-icons">radio_button_unchecked</i><span data-i18n="Vertical">Contact Page</span></a>
+
+              <!-- Gallery menu-->
+               <li class="{{ request()->is('gallery/add') ? 'active' : '' || request()->is('gallery/edit/*') ? 'active' : '' || request()->is('gallery/view/*') ? 'active' : ''}}"><a class="collapsible-header waves-effect waves-cyan" href="JavaScript:void(0)"><i class="material-icons">radio_button_unchecked</i><span data-i18n="Vertical">Gallery</span></a>
+                <div class="collapsible-body">
+                  <ul class="collapsible" data-collapsible="accordion">
+                    <li><a href="{{route('gallery.add')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">Add</span></a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
+
+              <!-- Contact Details menu-->
+               <li class="{{ request()->is('contact/details/add') ? 'active' : '' || request()->is('contact/details/edit/*') ? 'active' : '' || request()->is('contact/message') ? 'active' : '' || request()->is('contact/view/*') ? 'active' : ''}}"><a class="collapsible-header waves-effect waves-cyan" href="JavaScript:void(0)"><i class="material-icons">radio_button_unchecked</i><span data-i18n="Vertical">Contact Page</span></a>
                 <div class="collapsible-body">
                   <ul class="collapsible" data-collapsible="accordion">
 
@@ -475,12 +490,36 @@
               </li>
 
 
+               
+    
+
                <!-- Settings menu-->
-               <li class="{{ request()->is('settings/add') ? 'active' : '' || request()->is('settings/edit/*') ? 'active' : ''}}"><a class="collapsible-header waves-effect waves-cyan" href="JavaScript:void(0)"><i class="material-icons">radio_button_unchecked</i><span data-i18n="Vertical">Settings</span></a>
+               <li class="{{ request()->is('settings/add') ? 'active' : '' || request()->is('settings/edit/*') ? 'active' : '' ||  request()->is('privacy-policy/add') ? 'active' : '' || request()->is('privacy-policy/edit/*') ? 'active' : '' || request()->is('terms-conditions/add') ? 'active' : '' || request()->is('terms-conditions/edit/*') ? 'active' : '' || request()->is('mail/add') ? 'active' : '' }}"><a class="collapsible-header waves-effect waves-cyan" href="JavaScript:void(0)"><i class="material-icons">radio_button_unchecked</i><span data-i18n="Vertical">Settings</span></a>
                 <div class="collapsible-body">
                   <ul class="collapsible" data-collapsible="accordion">
-                    <li><a href="{{route('settings.add')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">Add</span></a>
+
+                      <!-- Logo/Name menu-->
+                     <li><a href="{{route('settings.add')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">Logo/Name Setting</span></a>
                     </li>
+
+                  <!-- Policy Details menu-->
+                    <li>
+                      <a href="{{route('privacypolicy.add')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">Privacy Policy</span></a>
+                    </li>
+
+                     <!-- Terms and Conditions  menu-->
+                    <li>
+                      <a href="{{route('termsconditions.add')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">Terms and Conditions</span></a>
+                    </li>
+
+                     <!--Mail Setting menu-->
+                    <li>
+                      <a href="{{route('mailSetting.add')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">Email Setting</span></a>
+                    </li>
+
+                   
+
+
                   </ul>
                 </div>
               </li>
@@ -1243,6 +1282,10 @@
     <!-- sweet-alert js -->
     <script src="{{ asset("Backend/app-assets/js/sweet-alert/sweet-alert.init.js")}}"></script>
     <script src="{{ asset("Backend/app-assets/js/sweet-alert/sweet-alert.min.js")}}"></script>
+
+
+
+
 
 
 

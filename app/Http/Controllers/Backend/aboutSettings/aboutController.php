@@ -34,6 +34,8 @@ class aboutController extends Controller
      */
      public function add()
     {
+    
+
         return view('Backend\AboutSettings\aboutsettingsAdd');
     }
 

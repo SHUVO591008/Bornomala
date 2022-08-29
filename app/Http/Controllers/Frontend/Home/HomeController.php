@@ -48,6 +48,21 @@ class HomeController extends Controller
        return view('Frontend.contact');
     }
 
+    public function gallery()
+    {
+       return view('Frontend.gallery');
+    }
+
+    public function PrivacyPolicy()
+    {
+       return view('Frontend.PrivacyPolicy');
+    }
+
+      public function TermsConditions()
+    {
+       return view('Frontend.termsconditions');
+    }
+
 
     /**
      * Show the form for creating a new resource.

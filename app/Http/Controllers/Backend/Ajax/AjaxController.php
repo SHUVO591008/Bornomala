@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backend\Ajax;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
+use App\Model\gallery;
+use Validator;
 
 
 class AjaxController extends Controller
@@ -40,6 +42,61 @@ class AjaxController extends Controller
                echo 'true';
 
             } 
+
+           
+        }
+
+
+    public function varifyGroupName(Request $request)
+        {
+
+            $this->middleware('auth');
+
+            $gallery = gallery::where('group_name', $request->group_name)->get();
+            $gallery1 = gallery::where('slug', $request->slug)->get();
+
+             if (count($gallery) > 0) {
+
+                if($request->slug){
+
+                    if($gallery1->isEmpty()){
+                        echo 'false';
+                    }else{
+
+                        if($gallery[0]->group_name!==$gallery1[0]->group_name){
+
+                                $validator = Validator::make($request->all(), [
+                                    'group_name' => 'unique:galleries,group_name',
+
+                                ]);
+
+                                if ($validator->passes()) {
+                                  echo 'truadade';
+                                    return response()->json(['success'=>'Added new records.']);
+                                }
+             
+                                echo 'false';
+
+                           }else{
+                            echo 'true';
+                           }
+                   }
+
+                 }else{
+                     echo 'false';
+                 }
+
+                
+
+
+                }else{
+                   echo 'true';
+                } 
+
+
+             
+
+             
 
            
         }

@@ -398,7 +398,7 @@ $news = App\Model\news::where('status',1)->latest()->get();
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="gallery.html">ছবি</a>
+              <a class="nav-link" href="{{ route('gallery') }}">ছবি</a>
             </li>
 
             <li class="nav-item">
@@ -477,7 +477,7 @@ $news = App\Model\news::where('status',1)->latest()->get();
           <li class="nav-item"><a class="nav-link text-light ps-0" href="#">স্টুডেন্ট রেজিস্ট্রেশন</a></li>
           <li class="nav-item"><a class="nav-link text-light ps-0" href="#">ক্লাস ভিডিও</a></li>
           <li class="nav-item"><a class="nav-link text-light ps-0" href="#">পেমেন্ট পদ্ধতি</a></li>
-          <li class="nav-item"><a class="nav-link text-light ps-0" href="gallery.html">ছবি</a></li>
+          <li class="nav-item"><a class="nav-link text-light ps-0" href="{{route('gallery')}}">ছবি</a></li>
 
         </ul>
 
@@ -485,8 +485,8 @@ $news = App\Model\news::where('status',1)->latest()->get();
       <div class="col-4 footer-link-part">
         <h3 class="text-warning"><u>টার্মস এন্ড পলিসি</u></h3>
         <ul class="p-0">
-          <li class="nav-item"><a class="nav-link text-light ps-0" href="#">প্রাইভেসী পলিসি</a></li>
-          <li class="nav-item"><a class="nav-link text-light ps-0" href="policy.html">টার্মস এন্ড কন্ডিশনস</a></li>
+          <li class="nav-item"><a class="nav-link text-light ps-0" href="{{route('PrivacyPolicy')}}">প্রাইভেসী পলিসি</a></li>
+          <li class="nav-item"><a class="nav-link text-light ps-0" href="{{route('TermsConditions')}}">টার্মস এন্ড কন্ডিশনস</a></li>
           <!-- <li class="nav-item"><a class="nav-link text-light ps-0" href="#">ডিসক্লেইমার</a></li> -->
 
 
@@ -614,17 +614,7 @@ $(document).ready(function() {
   <!-- //js-files -->
   
 
-  <!-- gallary-->
-  <script>
-    var gallery_init = {
-      group : ['Buildings', 'Landscapes', 'Beaches', 'Lamborghinis'],
-      //set_svg_color : '#ff6666',
-      //set_image_hover_transparency : false
-    };
 
-    $(gallery.construct(gallery_init));
-    </script>
-<!-- gallary-->
 
 <script src="{{ asset("Backend/app-assets/js/scripts/ui-alerts.min.js")}}"></script>
 
