@@ -8,7 +8,7 @@ class HeaderTopPosition extends Model
 {
     protected $guarded = [];
 
-    public function headerModelposition(){
+   public function headerModelposition(){
 
         return $this->belongsTo('App\Model\generalsetting','gen_id');
     }

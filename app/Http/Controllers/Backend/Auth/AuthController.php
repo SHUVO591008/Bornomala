@@ -33,21 +33,24 @@ class AuthController extends Controller
       if(Auth::check()){
         return redirect()->back();
       }else{
-        return view('auth.login');
+        return view('auth.user.login');
       }
         
     }
 
       public function showRegistrationForm()
     {
-        return view('auth.register');
+        return view('auth.user.register');
     }
 
     public function login(Request $request)
     {
+
+
        
          //coustom code
          $input = $request->all();
+
 
          $this->validate($request,[
             'email' =>'required',
@@ -61,10 +64,12 @@ class AuthController extends Controller
     
         $validData = User::where('email',$email)->orWhere('user_name', $email)->first();
         // $password_check = password_verify($password,@$validData->password);
-
         $fieldType = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'user_name';
 
-        
+        if($validData==null){
+            Auth::logout();
+            return redirect()->back()->with('msg','Sorry! Data Not Found');
+        }
 
         if(auth()->attempt(array($fieldType => $input['email'], 'password' => $input['password'])))
         {
@@ -89,8 +94,9 @@ class AuthController extends Controller
                  Auth::logout();
                 return redirect()->back()->with('msg','"Please wait..."Your ID is being monitored.');
             }
-            //other Devices Logout
-            Auth::logoutOtherDevices($request->input('password'));
+
+            
+            
 
             return redirect()->route('dashboard');
 
@@ -264,10 +270,12 @@ class AuthController extends Controller
                   DB::table('password_resets')->where(['email'=> $request->email])->delete();
 
                   if(Auth::check()){
-                    Auth::logout();
+                    //other Devices Logout
+                    Auth::logoutOtherDevices($request->input('password'));
+                    //Auth::logout();
                   }
           
-                  return redirect()->route('login')->with('msg', 'Your password has been changed!');
+                  return redirect()->route('login')->with('success', 'Your password has been changed!');
 
             }catch (\Exception $e) {
               

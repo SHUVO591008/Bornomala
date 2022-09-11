@@ -143,10 +143,13 @@ li.lwms-selectli{
 
                                               </td>
                                               <td>
+                                                @if($key->header_top_position==0)
                                                   <a class="btn-floating waves-effect waves-light amber darken-4 mr-5" href="{{route('general.edit',$prodID)}}" title="Edit"><i style="font-size: 14px;" class="fa-solid fa-pen-to-square"></i></a>
 
-                                                 @if($key->header_top_position==0)
+                                                 
                                                   <a class="delete-confirm btn-floating waves-effect waves-light green darken-1" href="{{ route('general.delete',$prodID) }}" title="Delete"><i style="font-size: 14px;" class="fa-solid fa-trash-can"></i></a>
+                                                  @else
+                                                  [Edit]-[Delete]
                                                 @endif
                                               </td>
                                            </tr>

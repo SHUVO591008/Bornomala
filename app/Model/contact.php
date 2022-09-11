@@ -9,11 +9,11 @@ class contact extends Model
          protected $guarded = [];
 
     public function createduser(){
-        return $this->belongsTo('App\User','created_by');
+        return $this->belongsTo('App\Model\Admin','created_by');
     }
 
      public function updateuser(){
-        return $this->belongsTo('App\User','updated_by');
+        return $this->belongsTo('App\Model\Admin','updated_by');
     }
 
    

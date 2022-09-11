@@ -93,7 +93,7 @@ $sl = 0;
                 <a target="_blank" href="#">এখানে ক্লিক করে</a>
                  আমাদের জানান।
             </p>
-@endif
+    @endif
 
         @if($SocialShare->isNotEmpty())
 

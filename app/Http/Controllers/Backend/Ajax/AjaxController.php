@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend\Ajax;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
+use App\Model\Admin;
 use App\Model\gallery;
 use Validator;
 
@@ -47,10 +48,41 @@ class AjaxController extends Controller
         }
 
 
+    public function varifyadminName(Request $request)
+        {
+
+            $userName = Admin::where('user_name', $request->username)->get();
+
+            if (count($userName) > 0) {
+                echo 'false';
+            }else{
+               echo 'true';
+
+            } 
+
+           
+        }
+
+    public function varifyadminemail(Request $request)
+        {
+
+            $email = Admin::where('email', $request->email)->get();
+
+            if (count($email) > 0) {
+                echo 'false';
+            }else{
+               echo 'true';
+
+            } 
+
+           
+        }
+
+
     public function varifyGroupName(Request $request)
         {
 
-            $this->middleware('auth');
+            $this->middleware('auth::webadmin');
 
             $gallery = gallery::where('group_name', $request->group_name)->get();
             $gallery1 = gallery::where('slug', $request->slug)->get();

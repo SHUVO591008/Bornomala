@@ -319,6 +319,7 @@
 
 
     <ul class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed menu-shadow" id="slide-out" data-menu="menu-navigation" data-collapsible="accordion">
+
       <!-- User menu -->
         <li class="{{ request()->is('users/list') ? 'active' : '' || request()->is('users/view') ? 'active' : '' || request()->is('users/add') ? 'active' : '' }} bold"><a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)"><i class="material-icons">face</i><span class="menu-title" data-i18n="User">User</span></a>
             <div class="collapsible-body">
@@ -533,9 +534,47 @@
       <!-- Website customize menu End-->
 
 
+      <!-- Manage System menu-->
+      <li class="{{request()->is('class/section') ? 'active' : '' || request()->is('section/part') ? 'active' : '' }} bold">
+
+
+        <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)"><i class="material-icons dp48">apps</i><span class="menu-title" data-i18n="Website">Manage System</span></a>
+          <div class="collapsible-body">
+            <ul class="collapsible collapsible-sub" data-collapsible="accordion">
+
+            <!-- Class menu-->
+               <li class="{{request()->is('class/section') ? 'active' : '' || request()->is('section/part') ? 'active' : ''}}"><a class="collapsible-header waves-effect waves-cyan" href="JavaScript:void(0)"><i class="material-icons">radio_button_unchecked</i><span data-i18n="Vertical">Class Setup</span></a>
+                <div class="collapsible-body">
+                  <ul class="collapsible" data-collapsible="accordion">
+                    <li>
+                      <a href="{{route('class.section')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">Class </span></a>
+                    </li>
+                    <li>
+                      <a href="{{route('section.part')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">Section </span></a>
+                    </li>
+                    <li>
+                      <a href="{{route('all.subject')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">Subjects </span></a>
+                    </li>
+                      <li>
+                      <a href=""><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">Exams </span></a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+               
+    
+
+         
+
+
+
+            </ul>
+          </div>
+      </li>
+      <!--  Manage System menu End-->
+
+
     </ul>
-
-
 
 
     <div class="navigation-background"></div><a class="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only" href="#" data-target="slide-out"><i class="material-icons">menu</i></a>
@@ -1262,6 +1301,8 @@
     <script src="{{asset("Backend/app-assets/vendors/quill/quill.min.js")}}"></script>
 
      <script src="{{asset("Backend/app-assets/js/scripts/data-tables.min.js")}}"></script>
+
+     <script src="{{asset("Backend/app-assets/js/scripts/advance-ui-modals.min.js")}}"></script>
 
 
     <!-- END PAGE LEVEL JS-->

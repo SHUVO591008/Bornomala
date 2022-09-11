@@ -232,7 +232,7 @@ $SocialShare = SocialShare::latest()->get();
                                                   
                                               </td>
                                             
-                                              <td>
+                                              <td style="width:21%">
                                                   <div class="switch">
                                                     <label>
                                                       <span>Active</span>

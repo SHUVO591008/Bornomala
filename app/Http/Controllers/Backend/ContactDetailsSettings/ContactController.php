@@ -19,7 +19,7 @@ class ContactController extends Controller
 {
     // public function __construct()
     // {
-    //     $this->middleware('auth');
+    //     $this->middleware('auth:webadmin');
     // }
 
 
@@ -40,7 +40,7 @@ class ContactController extends Controller
      */
    public function Detailsadd()
     {
-         $this->middleware('auth');
+        $this->middleware('auth:webadmin');
 
         return view('Backend\ContactSettings\DetailsAdd');
     }
@@ -53,7 +53,7 @@ class ContactController extends Controller
      */
     public function Detailsstore(Request $request)
     {
-        $this->middleware('auth');
+        $this->middleware('auth:webadmin');
        
         if(\Request::isMethod('post')){
         
@@ -131,7 +131,7 @@ class ContactController extends Controller
 
     public function Detailsstatus(Request $request)
     {
-        $this->middleware('auth');
+       $this->middleware('auth:webadmin');
 
         if($request->isMethod('post')){
 
@@ -163,7 +163,7 @@ class ContactController extends Controller
 
     public function socialstatus(Request $request)
     {
-        $this->middleware('auth');
+        $this->middleware('auth:webadmin');
 
         if($request->isMethod('post')){
 
@@ -199,7 +199,7 @@ class ContactController extends Controller
      */
     public function show($id)
     {
-        $this->middleware('auth');
+        $this->middleware('auth:webadmin');
 
         $decryptedID = Crypt::decrypt($id);
 
@@ -222,7 +222,7 @@ class ContactController extends Controller
      public function Detailsedit(Request $request,$id)
     {
 
-        $this->middleware('auth');
+        $this->middleware('auth:webadmin');
 
         if($request->isMethod('get')){
             try{
@@ -248,7 +248,7 @@ class ContactController extends Controller
 
     public function Detailsupdate(Request $request)
     {
-        $this->middleware('auth');
+        $this->middleware('auth:webadmin');
       
         if($request->isMethod('post')){
 
@@ -338,7 +338,7 @@ class ContactController extends Controller
      */
     public function Detailsdestroy(Request $request)
     {
-        $this->middleware('auth');
+        $this->middleware('auth:webadmin');
         
         if($request->isMethod('get')){
 
@@ -366,7 +366,7 @@ class ContactController extends Controller
 
      public function add()
     {
-         $this->middleware('auth');
+         $this->middleware('auth:webadmin');
 
         return view('Backend\ContactSettings\message');
     }

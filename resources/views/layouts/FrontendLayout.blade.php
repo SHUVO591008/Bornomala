@@ -275,6 +275,7 @@ $news = App\Model\news::where('status',1)->latest()->get();
 
         @if($HeaderLeft->isNotEmpty())
           @foreach($HeaderLeft as $key)
+
             <span>
               <?php echo $key->headerModelposition->icon ?>  {{$key->headerModelposition->text}}<br>
             </span>
@@ -412,7 +413,7 @@ $news = App\Model\news::where('status',1)->latest()->get();
           <ul class="navbar-nav">
 
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="login.html"><i class="fas fa-sign-in-alt"></i>  লগইন</a>
+                <a class="nav-link active" aria-current="page" href="{{route('user-login')}}"><i class="fas fa-sign-in-alt"></i>  লগইন</a>
               </li>
 
               <li class="nav-item">
@@ -420,7 +421,7 @@ $news = App\Model\news::where('status',1)->latest()->get();
               </li>
 
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="registration.html"><i class="fas fa-user-plus"></i>  সাইন আপ</a>
+                <a class="nav-link active" aria-current="page" href="{{route('user-register')}}"><i class="fas fa-user-plus"></i>  সাইন আপ</a>
               </li>
 
 
@@ -474,7 +475,7 @@ $news = App\Model\news::where('status',1)->latest()->get();
       <div class="col-4 footer-link-part">
         <h3 class="text-warning"><u>কিছু গুরুত্বপূর্ণ লিঙ্কঃ</u></h3>
         <ul class="p-0">
-          <li class="nav-item"><a class="nav-link text-light ps-0" href="#">স্টুডেন্ট রেজিস্ট্রেশন</a></li>
+          <li class="nav-item"><a class="nav-link text-light ps-0" href="{{route('user-register')}}">স্টুডেন্ট রেজিস্ট্রেশন</a></li>
           <li class="nav-item"><a class="nav-link text-light ps-0" href="#">ক্লাস ভিডিও</a></li>
           <li class="nav-item"><a class="nav-link text-light ps-0" href="#">পেমেন্ট পদ্ধতি</a></li>
           <li class="nav-item"><a class="nav-link text-light ps-0" href="{{route('gallery')}}">ছবি</a></li>

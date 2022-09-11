@@ -2648,7 +2648,7 @@ $(document).ready(function(){
             required: true,
             minlength: 5,
             remote:{
-                 url: "/users/varifyusername",
+                 url: "/admin/varifyusername",
                  type: "GET",
                  data: {
                     username: function() {
@@ -2669,7 +2669,7 @@ $(document).ready(function(){
             required: false,
             email:true,
             remote:{
-                 url: "/users/varifyemail",
+                 url: "/admin/varifyemail",
                  type: "GET",
                  data: {
                     email: function() {
@@ -3152,3 +3152,285 @@ $(document).ready(function(){
 
 
 });
+
+
+
+//Class setting form Validate
+
+$(document).ready(function(){
+
+
+ $("#classForm").validate({
+
+    rules: {
+      class: {
+        required: true,
+         maxlength: 55,
+           remote:{
+             url: "/class/varifyname",
+             type: "GET",
+             data: {
+                name: function() {
+                return $( "#class" ).val();
+              }
+
+            }
+        }
+
+      },
+       admission_fees: {
+        required: true,
+        digits: true,
+
+      },
+       monthly_fee: {
+            required: true,
+            digits: true,
+        },
+        exam_fee: {
+            required: true,
+            digits: true,
+        },
+   
+
+      },
+       //For custom messages
+      messages: {
+        class:{
+            remote: 'The Class Name is already in use!'
+        },
+        
+
+      },
+      errorElement : 'div',
+      errorPlacement: function(error, element) {
+        var placement = $(element).data('error');
+        if (placement) {
+          $(placement).append(error)
+        } else {
+            error.insertAfter(element);
+        }
+    }
+
+  });
+
+
+  $("#classFormUpdate").validate({
+
+    rules: {
+      class: {
+        required: true,
+          remote:{
+                 url: "/class/update/varifyname",
+                 type: "GET",
+                 data: {
+                    class: function() {
+                    return $( "#classinput" ).val();
+                  },
+                   id: function() {
+                    return $( "#hiddenVal" ).val();
+                  }
+                }
+            }
+      },
+       admission_fees: {
+        required: true,
+        digits: true,
+
+      },
+       monthly_fee: {
+            required: true,
+            digits: true,
+        },
+        exam_fee: {
+            required: true,
+            digits: true,
+        },
+         hiddenVal: {
+            required: true,
+        },
+   
+
+      },
+       //For custom messages
+      messages: {
+        class:{
+            remote: 'The Class Name is already in use!'
+        },
+        
+
+      },
+      errorElement : 'div',
+      errorPlacement: function(error, element) {
+        var placement = $(element).data('error');
+        if (placement) {
+          $(placement).append(error)
+        } else {
+            error.insertAfter(element);
+        }
+    }
+
+  });
+
+ 
+  });
+
+
+
+//Section setting form Validate
+
+$(document).ready(function(){
+
+
+ $("#SectionForm").validate({
+
+    rules: {
+       class_id: {
+        required: true,
+
+
+      },
+       'section[]': {
+            required: true,
+        },
+     
+        
+
+      },
+       //For custom messages
+      messages: {
+     
+        
+
+      },
+      errorElement : 'div',
+      errorPlacement: function(error, element) {
+        var placement = $(element).data('error');
+        if (placement) {
+          $(placement).append(error)
+        } else {
+            error.insertAfter(element);
+        }
+    }
+
+  });
+
+
+  $("#sectionFormUpdate").validate({
+
+    rules: {
+     class_id: {
+        required: true,
+
+
+      },
+       'section[]': {
+            required: true,
+        },
+
+  
+
+      },
+       //For custom messages
+      messages: {
+       
+
+      },
+      errorElement : 'div',
+      errorPlacement: function(error, element) {
+        var placement = $(element).data('error');
+        if (placement) {
+          $(placement).append(error)
+        } else {
+            error.insertAfter(element);
+        }
+    }
+
+  });
+
+ 
+  });
+
+
+
+//Subject setting form Validate
+
+$(document).ready(function(){
+
+
+ $("#SubjectForm").validate({
+
+    rules: {
+       class_id: {
+        required: true,
+
+
+      },
+       section_id: {
+            required: true,
+        },
+        'subject_name[]':{
+         required: true,
+        },
+        'subject_code[]':{
+         required: true,
+        },
+     
+       
+
+      },
+       //For custom messages
+      messages: {
+     
+        
+
+      },
+      errorElement : 'div',
+      errorPlacement: function(error, element) {
+        var placement = $(element).data('error');
+        if (placement) {
+          $(placement).append(error)
+        } else {
+            error.insertAfter(element);
+        }
+    }
+
+  });
+
+
+  $("#sectionFormUpdate").validate({
+
+    rules: {
+     class_id: {
+        required: true,
+
+
+      },
+       section: {
+            required: true,
+        },
+
+      },
+       //For custom messages
+      messages: {
+       
+
+      },
+      errorElement : 'div',
+      errorPlacement: function(error, element) {
+        var placement = $(element).data('error');
+        if (placement) {
+          $(placement).append(error)
+        } else {
+            error.insertAfter(element);
+        }
+    }
+
+  });
+
+ 
+  });
+
+
+
+

@@ -15,7 +15,7 @@ class generalSettingsController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+       $this->middleware('auth:webadmin');
     }
 
 
@@ -36,6 +36,7 @@ class generalSettingsController extends Controller
      */
     public function add()
     {
+   
         return view('Backend\GeneralSettings\generalSettingsAdd');
     }
 
@@ -293,9 +294,21 @@ class generalSettingsController extends Controller
     {
         if($request->isMethod('get')){
             try{
+
                 $decryptedID = Crypt::decrypt($id);
                 $general = generalsetting::where('id',$decryptedID)->first();
-                return view('Backend\GeneralSettings\generalSettingsAdd',compact('general'));
+
+                 if(!$general ->header_top_position==0){
+                    toastr()->error('Sorry!This will not happen now.');
+                     return redirect()->back();
+                 }else{
+                    return view('Backend\GeneralSettings\generalSettingsAdd',compact('general'));
+                 }
+
+
+
+
+                
 
             }catch (\Exception $e) {
 
@@ -314,6 +327,8 @@ class generalSettingsController extends Controller
     {
         if($request->isMethod('get')){
             try{
+
+
                 $decryptedID = Crypt::decrypt($id);
                 $data = socialSettings::where('id',$decryptedID)->first();
                 return view('Backend\GeneralSettings\generalSettingsAdd',compact('data'));

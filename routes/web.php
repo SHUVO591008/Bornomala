@@ -15,23 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-  //Auth Route
-    Route::get('dashboard/login', 'Backend\Auth\AuthController@showLoginForm')->name('login');
-    Route::post('dashboard/login', 'Backend\Auth\AuthController@login');
 
-    Route::post('logout', 'Backend\Auth\AuthController@logout')->name('logout');
-
-    Route::get('register', 'Backend\Auth\AuthController@showRegistrationForm')->name('register');
-    Route::post('register', 'Backend\Auth\AuthController@create');
-
-    //forgot password Route
-    Route::get('forgot/password', 'Backend\Auth\AuthController@Forgetpassword')->name('forgot');
-    Route::post('forgot/password', 'Backend\Auth\AuthController@updateForgetpassword')->name('Updateforgot');
-    Route::get('reset-password/{token}', 'Backend\Auth\AuthController@showResetPasswordForm')->name('reset.password.get');
-    Route::match(['GET', 'POST'],'reset-password', 'Backend\Auth\AuthController@submitResetPasswordForm')->name('reset.password.post');
-
-  // verify Routes... 
-    Route::get('/user/verify/{token}', 'Backend\Auth\AuthController@verifyEmail')->name('verifyEmail');
 
 
 // Frontend route
@@ -45,17 +29,47 @@ Route::get('/contact', 'Frontend\Home\HomeController@contact')->name('contact');
 Route::get('/gallery', 'Frontend\Home\HomeController@gallery')->name('gallery');
 Route::get('/privacy-policy', 'Frontend\Home\HomeController@PrivacyPolicy')->name('PrivacyPolicy');
 Route::get('/Terms-And-Conditions', 'Frontend\Home\HomeController@TermsConditions')->name('TermsConditions');
+    //user Auth Route
+Route::get('/login', 'Backend\Auth\AuthController@showLoginForm')->name('user-login');
+Route::post('login', 'Backend\Auth\AuthController@login');
+Route::get('/register', 'Backend\Auth\AuthController@showRegistrationForm')->name('user-register');
+Route::post('register', 'Backend\Auth\AuthController@create');
+    
 
-Route::get('users/varifyusername','Backend\Ajax\AjaxController@varifyuserName');
-Route::get('users/varifyemail','Backend\Ajax\AjaxController@varifyemail');
+
+
+
+// Backend route
+    //Admin Auth Route
+    Route::get('dashboard/login', 'Backend\Auth\AdminAuthController@showLoginForm')->name('login');
+    Route::post('dashboard/login', 'Backend\Auth\AdminAuthController@login');
+
+    Route::post('logout', 'Backend\Auth\AdminAuthController@logout')->name('logout');
+
+    Route::get('dashboard/register', 'Backend\Auth\AdminAuthController@showRegistrationForm')->name('register');
+    Route::post('dashboard/register', 'Backend\Auth\AdminAuthController@create');
+
+    //forgot password Route
+    Route::get('forgot/password', 'Backend\Auth\AdminAuthController@Forgetpassword')->name('forgot');
+    Route::post('forgot/password', 'Backend\Auth\AdminAuthController@updateForgetpassword')->name('Updateforgot');
+    Route::get('reset-password/{token}', 'Backend\Auth\AdminAuthController@showResetPasswordForm')->name('reset.password.get');
+    Route::match(['GET', 'POST'],'reset-password', 'Backend\Auth\AdminAuthController@submitResetPasswordForm')->name('reset.password.post');
+
+    // verify Routes... 
+    Route::get('/user/verify/{token}', 'Backend\Auth\AdminAuthController@verifyEmail')->name('verifyEmail');
+    Route::get('users/varifyusername','Backend\Ajax\AjaxController@varifyuserName');
+    Route::get('users/varifyemail','Backend\Ajax\AjaxController@varifyemail');
+
+    Route::get('admin/varifyusername','Backend\Ajax\AjaxController@varifyadminName');
+    Route::get('admin/varifyemail','Backend\Ajax\AjaxController@varifyadminemail');
 
 //user msg
  Route::post('/add', 'Backend\ContactDetailsSettings\ContactController@store')->name('contact.store');
 
 // group route
-Route::group(['middleware' =>'auth'], function () {
+Route::group(['middleware' =>'auth:webadmin'], function () {
 
-        // Backend route
+    
         Route::get('/dashboard', 'Backend\Dashboard\DashboardController@index')->name('dashboard');
 
         // User route
@@ -310,6 +324,50 @@ Route::group(['middleware' =>'auth'], function () {
             Route::get('/delete/{id}', 'Backend\Settings\settingsController@destroy')->name('settings.delete');
 
         });
+
+
+
+
+    //admin panel section ------------------
+      //class routes
+        Route::prefix('class')->group(function () {
+            Route::get('section','Backend\system\Admin\ClassController@ClassSection')->name('class.section');
+            Route::get('/varifyname','Backend\system\Admin\ClassController@varifyname');
+            Route::get('/update/varifyname','Backend\system\Admin\ClassController@updatevarifyname');
+            Route::post('insert','Backend\system\Admin\ClassController@ClassInsert')->name('class.insert');
+            Route::get('/classedit','Backend\system\Admin\ClassController@EditClass');
+            Route::post('update','Backend\system\Admin\ClassController@UpdateClass')->name('class.update');
+            Route::get('delete/{id}','Backend\system\Admin\ClassController@DeleteClass')->name('class.delete');
+
+        });
+
+        //section routes------------------------
+        Route::prefix('section')->group(function () {
+            Route::get('part','Backend\system\Admin\ClassController@SectionPart')->name('section.part');
+            Route::post('insert','Backend\system\Admin\ClassController@SectionInsert')->name('section.insert');
+            Route::get('delete/{id}','Backend\system\Admin\ClassController@DeleteSection')->name('section.delete');
+            Route::get('/edit','Backend\system\Admin\ClassController@EditSection');
+            Route::match(['GET', 'POST'],'update','Backend\system\Admin\ClassController@UpdateSection')->name('section.update');
+
+
+
+             Route::get('/get-section-name', 'Backend\system\Admin\ClassController@getSectionName');
+
+        });
+
+
+          //subjects routes-----------------------
+        Route::prefix('subject')->group(function () {
+            Route::get('all','Backend\system\Admin\SubjectController@AllSubject')->name('all.subject');  
+            Route::post('insert','Backend\system\Admin\SubjectController@InsertSubject')->name('subject.insert');
+            Route::get('delete/{id}','Backend\system\Admin\SubjectController@DeleteSubject')->name('subject.delete');
+            Route::get('edit/{id}','Backend\system\Admin\SubjectController@EditSubject');
+            Route::post('update','Backend\system\Admin\SubjectController@UpdateSubject')->name('subject.update');
+
+
+            Route::get('/get-section-name', 'Backend\system\Admin\SubjectController@getSectionName');
+        });
+
 
 
 });

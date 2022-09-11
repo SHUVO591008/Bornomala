@@ -4,11 +4,11 @@
 
 <?php
 use App\Model\AdminDetails;
-use App\User;
+use App\Model\Admin;
 $sl = 1;
 $AdminDetails = AdminDetails::get();
 
-$Admin = User::whereIn('role',['admin', 'super admin'])->where('status','active')->get();
+$Admin = Admin::where('status','active')->get();
 
 
 ?>

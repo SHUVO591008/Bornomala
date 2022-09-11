@@ -9,6 +9,9 @@ $header = header::all();
 
 
 ?>
+
+
+
 <!-- BEGIN: Page Main-->
     <div id="main">
         <div class="row">
@@ -142,6 +145,10 @@ $header = header::all();
                                                 <small class="errorStatus"></small>
                                             </div>
 
+
+
+
+
                                         </div>
 
                                       
@@ -266,4 +273,7 @@ $header = header::all();
         </div>
     </div>
       <!-- END: Page Main-->
+
+
+
 @endsection

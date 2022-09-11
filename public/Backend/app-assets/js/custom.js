@@ -1,4 +1,4 @@
-// Basic Select2 select
+//Basic Select2 select
 // $(".select2").select2({
 //     dropdownAutoWidth: true,
 //     width: '100%'
@@ -762,3 +762,160 @@ $('#SocialfooterPosition .lwms-removeall').on("click", function(){
 
 });
 
+
+
+ // Class Model
+ $(document).on("click", ".editClass", function() {
+
+        var val = $(this).attr("data-id");
+
+        $.ajax({
+            type: 'GET',
+            url: '/class/classedit',
+            
+            data: {
+                val: val,
+            },
+            dataType: 'json',
+            success: function(result) {
+                $('#modeldata').html(result)
+            },
+            error: function(result){
+                alert("fail");
+            },
+
+        });
+
+  
+});
+
+
+  // Section Model------ajax
+ $(document).on("click", ".editSection", function() {
+
+    var val = $(this).attr("data-id");
+
+    $.ajax({
+        type: 'GET',
+        url: '/section/edit',
+        
+        data: {
+            val: val,
+        },
+        dataType: 'json',
+        success: function(result) {
+            $('#modeldata').html(result)
+        },
+        error: function(result){
+            alert("fail");
+        },
+
+    });
+
+  
+});
+
+
+
+ function getSectionName(argument){
+
+
+
+    if(argument===undefined){
+         var class_id = $('#class_id').val();
+    }else{
+         var class_id = argument.value;
+    }
+
+
+      $.ajax({
+        type:"GET",
+        url:"/section/get-section-name",
+        data:{class_id:class_id},
+        success:function(data){
+
+           
+            
+            var html = '<option disabled value="">Section name typing....</option>';
+
+            $.each(data,function(key,v){
+                html +='<option selected value="'+v.section+'">'+v.section+'</option>';
+            });
+
+            if(argument===undefined){
+                 $('#section').html(html);
+            }else{
+                  $('#section1').html(html);
+            }
+
+
+        }
+    })
+
+ }
+
+
+$("#class_id").change(function () {
+    getSectionName();
+
+});
+
+
+//Subject Information handlebars-template
+$(document).ready(function() {
+
+    $(document).on("click", ".subjectadd", function() {
+
+        //handlebars-template code
+        var source = $('#subject-template').html();
+        var template = Handlebars.compile(source);
+        var html = template();
+        $('#addRowsubject').append(html);
+
+
+        //id generate
+        const id = "id" + Date.now() + Math.random().toString().substr(2);
+
+        $('#subject_name1').attr("id", id);
+        $('#subject_code1').attr("id", "code" + id);
+
+
+
+        var name = '.' + id;
+        var code = '.' + "code" + id;
+
+
+        $('#' + id).attr("data-error", name);
+        $('#' + "code" + id).attr("data-error", code);
+
+        $('.errorsubject_name0').attr("class", id);
+        $('.errorsubject_code0').attr("class", "code" + id);
+
+        //         //social group add
+        // $('.socialerrorStatus').attr("class", id);
+
+        // $('#' + "name" + id).attr("data-error", nameerror);
+        // $('.nameerror').attr("class", "name" + id);
+
+
+        // //script add
+        // $('#delete_add_more_item').append('<script>$(".select3").select2();$("select").formSelect();</script>');
+
+        
+
+
+    });
+
+
+
+    //Remove Button
+    $(document).on('click', ".subjectremove", function(event) {
+        var numItems = $('.delete_add_more_item').length
+        if (numItems == 1) {
+            alert('Sorry!It cannot be deleted.');
+        } else {
+            $(this).closest(".delete_add_more_item").remove();
+        }
+    });
+
+});
