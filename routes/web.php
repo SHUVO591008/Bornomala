@@ -87,7 +87,7 @@ Route::group(['middleware' =>'auth:webadmin'], function () {
 
         });
 
-        // Ajax route
+
 
 
 
@@ -329,6 +329,21 @@ Route::group(['middleware' =>'auth:webadmin'], function () {
 
 
     //admin panel section ------------------
+
+         //Year routes
+        Route::prefix('year')->group(function () {
+            Route::get('all','Backend\system\Admin\YearController@AllYear')->name('all.year');
+            Route::get('/varify','Backend\system\Admin\YearController@varifyYear');
+            Route::get('/update/varify','Backend\system\Admin\YearController@updatevarify');
+            Route::post('insert','Backend\system\Admin\YearController@insert')->name('year.insert');
+            Route::post('/status', 'Backend\system\Admin\YearController@status')->name('year.status');
+            Route::get('/edit','Backend\system\Admin\YearController@edit');
+            Route::post('update','Backend\system\Admin\YearController@Update')->name('year.update');
+            Route::get('delete/{id}','Backend\system\Admin\YearController@delete')->name('year.delete');
+
+        });
+
+
       //class routes
         Route::prefix('class')->group(function () {
             Route::get('section','Backend\system\Admin\ClassController@ClassSection')->name('class.section');
@@ -348,9 +363,6 @@ Route::group(['middleware' =>'auth:webadmin'], function () {
             Route::get('delete/{id}','Backend\system\Admin\ClassController@DeleteSection')->name('section.delete');
             Route::get('/edit','Backend\system\Admin\ClassController@EditSection');
             Route::match(['GET', 'POST'],'update','Backend\system\Admin\ClassController@UpdateSection')->name('section.update');
-
-
-
              Route::get('/get-section-name', 'Backend\system\Admin\ClassController@getSectionName');
 
         });
@@ -361,14 +373,42 @@ Route::group(['middleware' =>'auth:webadmin'], function () {
             Route::get('all','Backend\system\Admin\SubjectController@AllSubject')->name('all.subject');  
             Route::post('insert','Backend\system\Admin\SubjectController@InsertSubject')->name('subject.insert');
             Route::get('delete/{id}','Backend\system\Admin\SubjectController@DeleteSubject')->name('subject.delete');
-            Route::get('edit/{id}','Backend\system\Admin\SubjectController@EditSubject');
+            Route::get('/edit','Backend\system\Admin\SubjectController@EditSubject');
             Route::post('update','Backend\system\Admin\SubjectController@UpdateSubject')->name('subject.update');
-
-
             Route::get('/get-section-name', 'Backend\system\Admin\SubjectController@getSectionName');
         });
 
+          //exam routes------------------------
+        Route::prefix('exam')->group(function () {
+            
+             Route::get('all','Backend\system\Admin\ExamController@AllExam')->name('all.exam'); 
+             Route::get('/varifyname','Backend\system\Admin\ExamController@varifyname');
+             Route::get('/update/varifyname','Backend\system\Admin\ExamController@updatevarifyname');
+             Route::post('insert','Backend\system\Admin\ExamController@InsertExam')->name('exam.insert');
+             Route::post('/status', 'Backend\system\Admin\ExamController@status')->name('exam.status');
+             Route::get('delete/{id}','Backend\system\Admin\ExamController@DeleteExam')->name('exam.delete');
+             Route::get('/edit','Backend\system\Admin\ExamController@EditExam');
+             Route::post('update','Backend\system\Admin\ExamController@UpdateExam')->name('exam.update');
 
+        });
+
+
+
+         //admission routes are here---------------
+        Route::prefix('admission')->group(function () {
+             Route::get('admin-new-admission','Backend\system\Admin\AdmissionController@NewAdmission')->name('new.admission');
+             Route::post('admin-insert-admission','Backend\system\Admin\AdmissionController@InsertAdmission')->name('insert.admission');
+             Route::get('admin-today-admission','Backend\system\Admin\AdmissionController@TodayAdmission')->name('today.admission');
+             Route::get('admin/delete/admission/{id}','Backend\system\Admin\AdmissionController@DeleteAdmission'); 
+             Route::get('admin/edit/admission/{id}','Backend\system\Admin\AdmissionController@EditAdmission');
+             Route::post('admin/update/admission/{id}','Backend\system\Admin\AdmissionController@UpdateAdmission'); 
+             Route::get('admin/view/admission/{id}','Backend\system\Admin\AdmissionController@ViewAdmission'); 
+             Route::get('admin/search/admission','Backend\system\Admin\AdmissionController@SearchAdmission')->name('search.admission');
+             Route::get('admin/all/admission','Backend\system\Admin\AdmissionController@AllAdmission')->name('all.admission'); 
+             Route::post('admin/search/by/month','Backend\system\Admin\AdmissionController@SearchByMonth')->name('search.by.month');
+             Route::post('admin/search/by/date','Backend\system\Admin\AdmissionController@SearchByDate')->name('search.by.date'); 
+             Route::post('admin/search/by/class','Backend\system\Admin\AdmissionController@SearchByClass')->name('search.by.class');
+         });
 
 });
 

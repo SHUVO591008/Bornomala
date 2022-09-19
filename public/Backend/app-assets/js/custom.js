@@ -764,7 +764,7 @@ $('#SocialfooterPosition .lwms-removeall').on("click", function(){
 
 
 
- // Class Model
+ // Class Model ----Ajax
  $(document).on("click", ".editClass", function() {
 
         var val = $(this).attr("data-id");
@@ -790,7 +790,7 @@ $('#SocialfooterPosition .lwms-removeall').on("click", function(){
 });
 
 
-  // Section Model------ajax
+  // Section Model------Ajax
  $(document).on("click", ".editSection", function() {
 
     var val = $(this).attr("data-id");
@@ -814,6 +814,34 @@ $('#SocialfooterPosition .lwms-removeall').on("click", function(){
 
   
 });
+
+
+
+  // Subject Model------Ajax
+ $(document).on("click", ".editSubject", function() {
+
+    var val = $(this).attr("data-id");
+
+    $.ajax({
+        type: 'GET',
+        url: '/subject/edit',
+        
+        data: {
+            val: val,
+        },
+        dataType: 'json',
+        success: function(result) {
+            $('#modeldata').html(result)
+        },
+        error: function(result){
+            alert("fail");
+        },
+
+    });
+
+  
+});
+
 
 
 
@@ -864,6 +892,8 @@ $("#class_id").change(function () {
 //Subject Information handlebars-template
 $(document).ready(function() {
 
+    //add Subject
+
     $(document).on("click", ".subjectadd", function() {
 
         //handlebars-template code
@@ -891,18 +921,6 @@ $(document).ready(function() {
         $('.errorsubject_name0').attr("class", id);
         $('.errorsubject_code0').attr("class", "code" + id);
 
-        //         //social group add
-        // $('.socialerrorStatus').attr("class", id);
-
-        // $('#' + "name" + id).attr("data-error", nameerror);
-        // $('.nameerror').attr("class", "name" + id);
-
-
-        // //script add
-        // $('#delete_add_more_item').append('<script>$(".select3").select2();$("select").formSelect();</script>');
-
-        
-
 
     });
 
@@ -918,4 +936,104 @@ $(document).ready(function() {
         }
     });
 
+
+       //Edit Subject
+
+    $(document).on("click", ".subjectedit", function() {
+
+        //handlebars-template code
+        var source = $('#subject-edit-template').html();
+        var template = Handlebars.compile(source);
+        var html = template();
+        $('#editRowsubject').append(html);
+
+
+        //id generate
+        const id = "id" + Date.now() + Math.random().toString().substr(2);
+
+        $('#subject_name2').attr("id", id);
+        $('#subject_code2').attr("id", "code" + id);
+
+
+
+        var name = '.' + id;
+        var code = '.' + "code" + id;
+
+
+        $('#' + id).attr("data-error", name);
+        $('#' + "code" + id).attr("data-error", code);
+
+        $('.errorsubject_name1').attr("class", id);
+        $('.errorsubject_code1').attr("class", "code" + id);
+
+
+    });
+
+
+
+    //Remove Button
+    $(document).on('click', ".subjectEditremove", function(event) {
+        var numItems = $('.delete_Edit_more_item').length
+        if (numItems == 1) {
+            alert('Sorry!It cannot be deleted.');
+        } else {
+            $(this).closest(".delete_Edit_more_item").remove();
+        }
+    });
+
+
+
+
+});
+
+
+ // Exam Model ----Ajax
+ $(document).on("click", ".editExam", function() {
+
+        var val = $(this).attr("data-id");
+
+        $.ajax({
+            type: 'GET',
+            url: '/exam/edit',
+            
+            data: {
+                val: val,
+            },
+            dataType: 'json',
+            success: function(result) {
+                $('#modeldata').html(result)
+            },
+            error: function(result){
+                alert("fail");
+            },
+
+        });
+
+  
+});
+
+
+  // Year Model ----Ajax
+ $(document).on("click", ".editYear", function() {
+
+        var val = $(this).attr("data-id");
+
+        $.ajax({
+            type: 'GET',
+            url: '/year/edit',
+            
+            data: {
+                val: val,
+            },
+            dataType: 'json',
+            success: function(result) {
+                $('#modeldata').html(result)
+            },
+            error: function(result){
+                alert("fail");
+            },
+
+        });
+
+  
 });

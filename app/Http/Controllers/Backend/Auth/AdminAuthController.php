@@ -118,6 +118,9 @@ class AdminAuthController extends Controller
             if(!$user->email_verified_at){
                 $user->email_verified_at=Carbon::now();
                 $user->save();
+
+                //verifyAdmin::where('token',$token)->delete();
+
                 return \redirect(route('login'))->with('success','Your Email Has Verified.');
             }else{
                  return \redirect()->back()->with('success','Your Email Has Already Been Verified.');

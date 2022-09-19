@@ -3161,11 +3161,11 @@ $(document).ready(function(){
 
 
  $("#classForm").validate({
-
     rules: {
       class: {
         required: true,
          maxlength: 55,
+
            remote:{
              url: "/class/varifyname",
              type: "GET",
@@ -3398,7 +3398,7 @@ $(document).ready(function(){
   });
 
 
-  $("#sectionFormUpdate").validate({
+  $("#subjectFormUpdate").validate({
 
     rules: {
      class_id: {
@@ -3406,8 +3406,14 @@ $(document).ready(function(){
 
 
       },
-       section: {
+       section_id: {
             required: true,
+        },
+        'subject_name[]':{
+         required: true,
+        },
+        'subject_code[]':{
+         required: true,
         },
 
       },
@@ -3434,3 +3440,228 @@ $(document).ready(function(){
 
 
 
+//Exam setting form Validate
+ 
+$("#examForm").validate({
+  
+  submitHandler: function(form) {
+    form.submit();
+  },
+  ignore: [],
+  rules: {
+    exam_name: {
+        required: true,
+        maxlength:100,
+        remote:{
+             url: "/exam/varifyname",
+             type: "GET",
+             data: {
+                exam_name: function() {
+                return $( "#exam_name" ).val();
+              }
+
+            }
+        }
+    },
+     status: {
+        required: true,
+        statusActiveInactive:true,
+    },
+
+ 
+
+  },
+
+ //For custom messages
+  messages: {
+    exam_name:{
+        remote: 'The Exam Name is already in use!'
+    },
+    
+
+  },
+
+   errorElement : 'div',
+      errorPlacement: function(error, element) {
+        var placement = $(element).data('error');
+        if (placement) {
+          $(placement).append(error)
+        } else {
+            error.insertAfter(element);
+        }
+    },
+    
+
+
+});
+
+//Exam Update setting form Validate
+ 
+$("#examFormUpdate").validate({
+  
+  submitHandler: function(form) {
+    form.submit();
+  },
+  ignore: [],
+  rules: {
+    exam_name: {
+        required: true,
+        maxlength:100,
+         remote:{
+             url: "/exam/update/varifyname",
+             type: "GET",
+             data: {
+                exam_name: function() {
+                return $( "#exam_name2" ).val();
+              },
+               id: function() {
+                return $( "#hiddenVal" ).val();
+              }
+            }
+        }
+    },
+     status: {
+        required: true,
+        statusActiveInactive:true,
+    },
+
+ 
+
+  },
+
+ //For custom messages
+  messages: {
+    exam_name:{
+        remote: 'The Exam Name is already in use!'
+    },
+    
+
+  },
+
+   errorElement : 'div',
+      errorPlacement: function(error, element) {
+        var placement = $(element).data('error');
+        if (placement) {
+          $(placement).append(error)
+        } else {
+            error.insertAfter(element);
+        }
+    },
+    
+
+
+});
+
+
+
+//Year setting form Validate
+ 
+$("#yearForm").validate({
+  
+  submitHandler: function(form) {
+    form.submit();
+  },
+  ignore: [],
+  rules: {
+    year: {
+        required: true,
+        digits: true,
+        remote:{
+             url: "/year/varify",
+             type: "GET",
+             data: {
+                year: function() {
+                return $( "#year" ).val();
+              }
+
+            }
+        }
+    },
+     status: {
+        required: true,
+        statusActiveInactive:true,
+    },
+
+ 
+
+  },
+
+ //For custom messages
+  messages: {
+    year:{
+        remote: 'The Year is already in use!'
+    },
+    
+
+  },
+
+   errorElement : 'div',
+      errorPlacement: function(error, element) {
+        var placement = $(element).data('error');
+        if (placement) {
+          $(placement).append(error)
+        } else {
+            error.insertAfter(element);
+        }
+    },
+    
+
+
+});
+
+//Year Update setting form Validate
+ 
+$("#yearFormUpdate").validate({
+  
+  submitHandler: function(form) {
+    form.submit();
+  },
+  ignore: [],
+  rules: {
+    year: {
+        required: true,
+        digits: true,
+         remote:{
+             url: "/year/update/varify",
+             type: "GET",
+             data: {
+                year: function() {
+                return $( "#year2" ).val();
+              },
+               id: function() {
+                return $( "#hiddenVal" ).val();
+              }
+            }
+        }
+    },
+     status: {
+        required: true,
+        statusActiveInactive:true,
+    },
+
+ 
+
+  },
+
+ //For custom messages
+  messages: {
+    year:{
+        remote: 'The Year is already in use!'
+    },
+    
+
+  },
+
+   errorElement : 'div',
+      errorPlacement: function(error, element) {
+        var placement = $(element).data('error');
+        if (placement) {
+          $(placement).append(error)
+        } else {
+            error.insertAfter(element);
+        }
+    },
+    
+
+
+});

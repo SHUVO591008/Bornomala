@@ -1,12 +1,7 @@
 @extends('layouts.BackendLayout')
 
 @section('content')
-<?php
 
-
-
-
-?>
 
 
 <style>
@@ -35,6 +30,25 @@
  z-index: 99999;
 }
 
+
+strong{
+    font-weight: bold;
+    font-size: 17px;
+    color: black;
+        background: #a2ed14;
+    border-style: dashed;
+    padding: 10px;
+    border-color: chocolate;
+}
+
+.total_subject {
+    border-style: solid;
+    padding: 5px;
+    background: blanchedalmond;
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+}
 
 </style>
 
@@ -97,7 +111,7 @@
                           <h4 class="card-title">Subject Table Show</h4>
                           <div class="row">
                             <div class="col s12">
-                              <table id="page-length-option" class="display bordered centered">
+                              <table id="page-length-option" class="display bordered responsive-table">
                                 <thead>
                                   <tr>
                                         <th>SL</th>
@@ -109,7 +123,7 @@
                                  <tbody>
                                  @foreach($subject as $key)
                                         <tr>
-                                            <th  colspan="4">#Class Name: {{$key->class }}</th>
+                                            <th style="text-align:center;" colspan="4"><strong>#Class Name: {{$key->class }}</strong></th>
                                      
                                      
                                         </tr>
@@ -125,25 +139,35 @@
 
                                         ?>
                                 @foreach($sectionData as $key)
-                                    @php $prodID= Crypt::encrypt($key->id); @endphp
+                                    @php $prodID= Crypt::encrypt($key->section_id); @endphp
 
                                         <tr>
                                             <td >{{$sl++}}</td>
                                              <td>{{$key->section}}</td>
-                                             <td>
-                                                <?php 
+                                             <td width="60%">
+                                            <?php 
+
+                                          
                                              
                                             $subject = DB::table('subjects')
                                            ->where('subjects.section_id',$key->section_id)
                                             ->get();
                                              ?>
 
+                                              <span class="total_subject">Total Subject : {{count($subject)}}</span> 
+                                                <br>
+                                                <br>
+
                                             @foreach($subject as $key)
                                                 {{$key->subject_name}}-{{$key->subject_code}} {{ $loop->last ? '' : ',' }}
+                                              
                                             @endforeach
+                                           
+
+                                         
 
                                             </td>
-                                             <td>
+                                             <td width="10%">
                                                  <a id="editSubject" data-id="{{$prodID}}" class="btn-floating waves-effect waves-light amber darken-4 mr-5 modal-trigger editSubject" href="#modal3" title="Edit"><i style="font-size: 14px;" class="fa-solid fa-pen-to-square"></i></a> 
 
                                                 <a class="delete-confirm btn-floating waves-effect waves-light green darken-1" href="{{ route('subject.delete',$prodID) }}" title="Delete"><i style="font-size: 14px;" class="fa-solid fa-trash-can"></i></a>
@@ -253,7 +277,6 @@
                         </select>
 
                        <small class="class_id30"></small>
-
                     </div>
 
                     <div class="input-field col m12 s12">
@@ -265,21 +288,19 @@
                     </div>
 
 
-                   
-
                     <div class="addRowsubject" id="addRowsubject">
                         <div id="delete_add_more_item" class="delete_add_more_item">
 
                              <div class="input-field col m5 s5">
                                 <label for="subject_name">Subject Name: <span class="red-text">*</span></label>
-                                <input id="subject_name" name="subject_name[]" type="text" data-error=".errorsubject_name1"  class="validate" data-error=".errorsubject_name1" required="">
+                                <input id="subject_name" name="subject_name[]" type="text"  class="validate" data-error=".errorsubject_name1" required="">
                                 <small class="errorsubject_name1"></small>
                                
                             </div>
 
                             <div class="input-field col m4 s4">
                                 <label for="subject_code">Subject Code: <span class="red-text">*</span></label>
-                                <input id="subject_code" name="subject_code[]" type="text" data-error=".errorsubject_code1"  class="validate" data-error=".errorsubject_code1" required="">
+                                <input id="subject_code" name="subject_code[]" type="text"  class="validate" data-error=".errorsubject_code1" required="">
                                 <small class="errorsubject_code1"></small>
                                
                             </div>
@@ -381,18 +402,18 @@
 <!-- x-handlebars-template Add Subject Information-->
 <script id="subject-template" type="text/x-handlebars-template">
 
-        <div class="delete_add_more_item " id="delete_add_more_item">
+        <div class="delete_add_more_item" id="delete_add_more_item">
             <div id="subjectDiv" class="row">
                  <div class="input-field col m5 s5">
                     <label for="">Subject Name: <span class="red-text">*</span></label>
-                    <input id="subject_name1" name="subject_name[]" type="text" data-error=".errorsubject_name0"  class="validate" data-error=".errorsubject_name0" required="">
+                    <input id="subject_name1" name="subject_name[]" type="text"  class="validate" data-error=".errorsubject_name0" required="">
                     <small class="errorsubject_name0"></small>
                    
                 </div>
 
                 <div class="input-field col m4 s4">
                     <label for="">Subject Code: <span class="red-text">*</span></label>
-                    <input id="subject_code1" name="subject_code[]" type="text" data-error=".errorsubject_code0"  class="validate" data-error=".errorsubject_code0" required="">
+                    <input id="subject_code1" name="subject_code[]" type="text"  class="validate" data-error=".errorsubject_code0" required="">
                     <small class="errorsubject_code0"></small>
                    
                 </div>
@@ -408,15 +429,46 @@
             </div>
       </div>
  </script>
+
+ <script id="subject-edit-template" type="text/x-handlebars-template">
+
+        <div class="delete_Edit_more_item" id="delete_Edit_more_item">
+            <div id="subjectDiv" class="row">
+                 <div class="input-field col m5 s5">
+                    <label for="">Subject Name: <span class="red-text">*</span></label>
+                    <input id="subject_name2" name="subject_name[]" type="text"  class="validate" data-error=".errorsubject_name3" required="">
+                    <small class="errorsubject_name3"></small>
+                   
+                </div>
+
+                <div class="input-field col m4 s4">
+                    <label for="">Subject Code: <span class="red-text">*</span></label>
+                    <input id="subject_code2" name="subject_code[]" type="text"  class="validate" data-error=".errorsubject_code3" required="">
+                    <small class="errorsubject_code3"></small>
+                   
+                </div>
+
+                <div class="input-field col m3 s3">
+
+                    <div  id="subjectedit" class="btn-light btn subjectedit"><i class="fas fa-plus-circle"></i></div>
+
+                    <div  class="red btn subjectEditremove"><i class="fas fa-minus-circle"></i></div>
+                   
+                </div>
+
+            </div>
+      </div>
+ </script>
  <!-- x-handlebars-template Add Subject Information End-->
 
 
 
 <!-- ajax -->
 <script>
-// section function
+// section add function
 function myFunction(argument) {
     var class_id = argument.value;
+
 
     $.ajax({
         type:"GET",
@@ -431,6 +483,29 @@ function myFunction(argument) {
                 html +='<option value="'+v.id+'">'+v.section+'</option>';
             });
             $('#section_id').html(html);
+        }
+    })
+
+}
+
+// section Edit function
+function myFunctionEdit(argument) {
+    var class_id = argument.value;
+
+
+    $.ajax({
+        type:"GET",
+        url:"/subject/get-section-name",
+        data:{class_id:class_id},
+        success:function(data){
+            var html = '<option disabled selected value="">Select Section</option>';
+            $.each(data,function(key,v){
+
+
+             
+                html +='<option value="'+v.id+'">'+v.section+'</option>';
+            });
+            $('#section_idEdit').html(html);
         }
     })
 

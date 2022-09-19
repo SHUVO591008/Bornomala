@@ -33,15 +33,19 @@ class ClassController extends Controller
 
     public function varifyname(Request $request)
     {
+        if($request->ajax()){
+            $name = DB::table('classes')->where('class', $request->name)->get();
 
-        $name = DB::table('classes')->where('class', $request->name)->get();
+            if (count($name) > 0) {
+                echo 'false';
+            }else{
+               echo 'true';
 
-        if (count($name) > 0) {
-            echo 'false';
+            }
         }else{
-           echo 'true';
-
-        }
+              return response()->json(['check'=>'Sorry!Please not try again.']);
+            
+         }
 
 
     }
@@ -50,21 +54,24 @@ class ClassController extends Controller
 
     public function updatevarifyname(Request $request)
     {
-        
+        if($request->ajax()){
 
-        $decryptedID = Crypt::decrypt($request->id);
+            $decryptedID = Crypt::decrypt($request->id);
 
-   
+       
 
-        $name = DB::table('classes')->where('class', $request->class)->whereNotIn('id',[$decryptedID])->get();
+            $name = DB::table('classes')->where('class', $request->class)->whereNotIn('id',[$decryptedID])->get();
 
-        if (count($name) > 0) {
-            echo 'false';
+            if (count($name) > 0) {
+                echo 'false';
+            }else{
+               echo 'true';
+
+            }
         }else{
-           echo 'true';
-
-        }
-
+            return response()->json(['check'=>'Sorry!Please not try again.']);
+            
+         }
 
     }
 
@@ -321,6 +328,8 @@ class ClassController extends Controller
             return redirect()->back();
         }
 
+
+
         for ($i=0; $i < count($request->section) ; $i++) { 
 
             $section = $request->section[$i];
@@ -332,23 +341,30 @@ class ClassController extends Controller
                 $data['section']=$request->section[$i];
                 $data['created_by']= Auth()->user()->id;
                 $sectionSave=DB::table('sections')->insert($data);
+            }else{
+
+                $findSectionId = DB::table('sections')
+                    ->where('class_id',$decrypted)
+                    ->pluck('id');
+
+                $checkSubject = DB::table('subjects')
+                    ->whereIn('section_id',$findSectionId)
+                    ->pluck('section_id');
+
+                DB::table('sections')
+                    ->whereNotIn('id',$checkSubject)
+                    ->whereIn('id',DB::table('sections')->where('class_id',$decrypted)->whereNotIn('section',$request->section)->pluck('id'))
+                    ->delete();
+
             }
            
 
         }
 
 
-
-        if(@$sectionSave) {
-                toastr()->success('Data Created Successfully.');
-                  return redirect()->back();
-             }else{
-                toastr()->error('Data Nothing to Created.');
-               return redirect()->back();
-         } 
-
-
-
+        toastr()->success('Data Created Successfully.');
+        return redirect()->back();
+   
 
         }catch (\Exception $e) {
             toastr()->error('Opps!Something went wrong');
@@ -455,7 +471,6 @@ class ClassController extends Controller
     {
 
 
-
         if(\Request::isMethod('post')){
 
      
@@ -473,7 +488,6 @@ class ClassController extends Controller
 
         $class_id = Crypt::decrypt($request->class_id);
 
-
         $classcheck = DB::table('classes')->where('id',$class_id)->first();
 
 
@@ -483,7 +497,9 @@ class ClassController extends Controller
         }
 
 
-        $DataDelete = DB::table('sections')->where('class_id',$class_id)->delete();
+
+
+        //$DataDelete = DB::table('sections')->where('class_id',$class_id)->delete();
 
 
         for ($i=0; $i < count($request->section) ; $i++) { 
@@ -491,28 +507,37 @@ class ClassController extends Controller
             $section = $request->section[$i];
             $DataChack  =  DB::table('sections')->where('class_id',$class_id)->where('section',$section)->first();
 
-            if($DataChack==null){
+
+             if($DataChack==null){
                 $data=array();
                 $data['class_id']=$class_id;
                 $data['section']=$request->section[$i];
                 $data['updated_by']= Auth()->user()->id;
                 $sectionSave=DB::table('sections')->insert($data);
-                
+            }else{
+
+                $findSectionId = DB::table('sections')
+                    ->where('class_id',$class_id)
+                    ->pluck('id');
+
+                $checkSubject = DB::table('subjects')
+                    ->whereIn('section_id',$findSectionId)
+                    ->pluck('section_id');
+
+                DB::table('sections')
+                    ->whereNotIn('id',$checkSubject)
+                    ->whereIn('id',DB::table('sections')->where('class_id',$class_id)->whereNotIn('section',$request->section)->pluck('id'))
+                    ->delete();
+
             }
 
 
-
+     
         }
-         if(@$sectionSave) {
-                toastr()->success('Data Update Successfully.');
-                  return redirect()->back();
-             }else{
-                toastr()->error('Data Nothing to Update.');
-               return redirect()->back();
-         } 
-
-
-
+ 
+            toastr()->success('Data Update Successfully.');
+            return redirect()->back();
+         
 
 
         }catch (\Exception $e) {
@@ -540,11 +565,30 @@ class ClassController extends Controller
         if($request->isMethod('get')){
 
             try{
-                $decrypted = Crypt::decrypt($id);
-              $DataDelete = DB::table('sections')->where('class_id',$decrypted)->delete();
 
+            $decrypted = Crypt::decrypt($id);
+
+            $findSectionId = DB::table('sections')
+                ->where('class_id',$decrypted)
+                ->pluck('id');
+
+            $check = DB::table('subjects')
+                ->whereIn('section_id',$findSectionId)
+                ->pluck('section_id');
+
+            
+            $DataDelete = DB::table('sections')
+                ->where('class_id',$decrypted)
+                ->whereNotIn('id',$check)
+                ->delete();
+
+            if($DataDelete){
                 toastr()->success('Data Deleted Successfully.');
-                return redirect()->route('section.part');
+            }else{
+                toastr()->error('Sorry..! Could not be deleted now..');
+            }
+
+            return redirect()->route('section.part');
 
             }catch (\Exception $e) {
                 toastr()->error('Opps!Something went wrong.');

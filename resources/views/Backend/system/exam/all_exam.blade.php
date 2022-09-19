@@ -1,13 +1,12 @@
 @extends('layouts.BackendLayout')
 
 @section('content')
+
 <?php
 
 $sl = 1;
 
-
 ?>
-
 
 <style>
 
@@ -31,10 +30,6 @@ $sl = 1;
     border-radius: 11px;
 }
 
-.select2-container {
- z-index: 99999;
-}
-
 
 </style>
 
@@ -51,7 +46,7 @@ $sl = 1;
                     <div class="col s12 m6 l6">
                       <h5 class="breadcrumbs-title mt-0 mb-0">
                         <span>
-                        Section List
+                        Exam List
                             </span>
                         </h5>
                     </div>
@@ -71,13 +66,13 @@ $sl = 1;
           </div>
 
    
-            <!-- Section settings show-->
+            <!-- Exam settings show-->
               <div class="users-list-table">
                   <div class="card">
                     <div class="card-content">
                         <div  class="card-header col m12 s12">
-                            <h4 style="text-align: center;background: #d2ef5e;color: black;padding: 10px;    font-weight: 700;" class="General card-title ">Section Table
-                                <a id="classAdd" class="mb-6 btn waves-effect waves-light darken-1 modal-trigger" style="float: right;background-color: black;" href="#modal2"><i class="fas fa-plus-circle"></i> Add New</a>
+                            <h4 style="text-align: center;background: #d2ef5e;color: black;padding: 10px;    font-weight: 700;" class="General card-title ">Exam Table
+                                <a id="examAdd" class="mb-6 btn waves-effect waves-light darken-1 modal-trigger" style="float: right;background-color: black;" href="#modal2"><i class="fas fa-plus-circle"></i> Add New</a>
                             </h4>
 
                             <hr>
@@ -92,75 +87,49 @@ $sl = 1;
                         <div class="col s12">
                         <div class="card">
                         <div class="card-content">
-                          <h4 class="card-title">Section Table Show</h4>
+                          <h4 class="card-title">Exam Table Show</h4>
                           <div class="row">
                             <div class="col s12">
+
                               <table id="page-length-option" class="display bordered centered">
                                 <thead>
                                   <tr>
-                                         <th>SL</th>
-                                        <th>Class Name</th>
-                                        <th>Section Name</th>
-                                        <th>Action</th>
+                                      <th>SL</th>
+                                      <th>Exam Name </th>
+                                      <th>Status</th>
+                                      <th>Action</th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($section as $key)
+                                    @foreach($exam as $key)
                                     @php 
                                     $prodID= Crypt::encrypt($key->id);
-                                    $class_id = Crypt::encrypt($key->class_id);
-
-
-                                    //Check Condition
-                                     $findSectionId = DB::table('sections')
-                                        ->where('class_id',$key->class_id)
-                                        ->pluck('id');
-
-
-
-                                    $subject = DB::table('subjects')
-                                        ->whereIn('section_id',$findSectionId)
-                                        ->pluck('section_id');
-
-                                       if($findSectionId==$subject){
-                                            $check=1;
-                                       }else{
-                                          $check=0;
-
-                                       }
-                
-                                 
+                                   
                                      @endphp
                                         <tr>
                                           <td>{{ $sl++ }}</td>
-                                          <td>{{ $key->class }}</td>
+                                          <td>{{ $key->exam_name }}</td>
                                           <td>
-                                              <?php 
-                                             
-                                                $sectionData = App\Model\System\section::where('class_id',$key->class_id)->select('section')->get();
+                                          	 @php $prodID= Crypt::encrypt($key->id); @endphp
 
-                                               ?>
+                                            <div class="switch">
+                                                <label>
+                                                  <span>Inactive</span>
+                                                  <input data-column="{{route('exam.status')}}" class="status exam" data-id="{{$prodID}}" id="status'" {{($key->status==1)?'checked':''}} type="checkbox">
+                                                  <span class="lever"></span>
+                                                  <span>Active</span>
+                                                </label>
+                                            </div>
 
-                                            @foreach ($sectionData as $name)
-
-                                            {{$name->section}}{{ $loop->last ? '' : ',' }}
-                                           
-                                            @endforeach
-                                            
                                           </td>
-
                                           <td>
                                             
-                                            <a id="editSection" data-id="{{$prodID}}" class="btn-floating waves-effect waves-light amber darken-4 mr-5 modal-trigger editSection" href="#modal3" title="Edit"><i style="font-size: 14px;" class="fa-solid fa-pen-to-square"></i></a> 
+                                            <a id="editExam" data-id="{{$prodID}}" class="btn-floating waves-effect waves-light amber darken-4 mr-5 modal-trigger editExam" href="#modal3" title="Edit"><i style="font-size: 14px;" class="fa-solid fa-pen-to-square"></i></a> 
 
-                                            @if($check==0)
-                                                <a class="delete-confirm btn-floating waves-effect waves-light green darken-1" href="{{ route('section.delete',$class_id) }}" title="Delete"><i style="font-size: 14px;" class="fa-solid fa-trash-can"></i>
-                                                </a>
-                                            @else
-                                              <a onclick="alert('Sorry..! Could not be deleted now.')" class=" btn-floating waves-effect waves-light blue darken-1" href="javascript:void(0)" title="Delete"><i style="font-size: 14px;" class="fa-solid fa-trash-can"></i></a>
+                                        
+                                            <a class="delete-confirm btn-floating waves-effect waves-light green darken-1" href="{{ route('exam.delete',$prodID) }}" title="Delete"><i style="font-size: 14px;" class="fa-solid fa-trash-can"></i></a>
 
-                                            @endif
-
+                                         
                                           </td>
                                         </tr>
                                       @endforeach
@@ -168,6 +137,7 @@ $sl = 1;
                                 </tbody>
                                
                               </table>
+
                             </div>
                           </div>
                         </div>
@@ -179,7 +149,7 @@ $sl = 1;
                     </div>
                   </div>
                 </div>
-            <!-- Section settings show End-->
+            <!-- Exam settings show End-->
 
 
         </div>
@@ -189,7 +159,7 @@ $sl = 1;
     {{-- modal start here --}}
 
     <div id="modal2" class="modal modal-fixed-footer">
-     <form id="SectionForm" method="POST" action="{{ route('section.insert') }}">
+     <form id="examForm" method="POST" action="{{ route('exam.insert') }}">
         @csrf
       <div class="modal-content">
 
@@ -237,49 +207,32 @@ $sl = 1;
 
         <!-- warning msg show End-->
 
-   
-
         <div class="modal-title col m12">
-            <h6 id="model-header" style="color:white;float: left;" class="">New Section Add</h6>
+            <h6 id="model-header" style="color:white;float: left;" class="">New Exam Add</h6>
             <button style="float:right;" type="button" class="modal-close btn">&times;</button>
         </div>
             <div class="row mt-5">
                 <div class="modal-body">
 
-                    <div class="input-field col m12 s12">
-                         <select class="select2 browser-default validate" name="class_id" id="class_id" data-error=".class_id30" required="">
-                            <option value="" selected disabled> Select Class</option>
+                    <div class="input-field col m6 s6">
+                        <label for="exam_name">Exam Name: <span class="red-text">*</span></label>
+                        <input id="exam_name" name="exam_name" type="text" data-error=".errorexam1"  class="validate" data-error=".errorexam1" required="">
+                        <small class="errorexam1"></small>
+                    </div>
 
-                            @php 
-                            $class=DB::table('classes')->get();
-                            @endphp
-                            @foreach($class as $key)
-                            <option value="{{ Crypt::encrypt($key->id) }}">{{ $key->class }}</option>
-                            @endforeach
+                     <div class="input-field col m6 s6">
+                        <select class="validate" name="status" id="status" data-error=".errorStatus" required="">
+
+                        <option  value="" >Select Status</option>
+                        <option  value="active">Active</option>
+
+                        <option  value="inactive">Inactive</option>
 
                         </select>
-
-                       <small class="class_id30"></small>
-
+                        <label>Status: <span class="red-text">*</span></label>
+                        <small class="errorStatus"></small>
                     </div>
 
-                    <div class="input-field col m12 s12 mb-4">
-                        <label>Section Name: <span class="red-text ">*</span></label>
-                    </div>
-
-                    <div class="input-field col m12 s12">
-                   
-
-                           <select name="section[]" id="section" data-error=".errorsection"  class="browser-default max-length validate" multiple="multiple" required="">
-                            <option disabled value="">Section name typing....</option>
-                    
-                          
-                            </select>
-
-                            <small class="errorsection"></small>
-                    </div>
-
-                  
                 </div>
             </div>
 
@@ -295,7 +248,7 @@ $sl = 1;
 //model-2
 
     <div id="modal3" class="modal modal-fixed-footer">
-     <form id="sectionFormUpdate" method="POST" action="{{ route('section.update') }}">
+     <form id="examFormUpdate" method="POST" action="{{ route('exam.update') }}">
         @csrf
       <div class="modal-content">
 
@@ -344,7 +297,7 @@ $sl = 1;
         <!-- warning msg show End-->
 
         <div class="modal-title col m12">
-            <h6 id="model-header" style="color:white;float: left;" class="">Section Edit</h6>
+            <h6 id="model-header" style="color:white;float: left;" class="">Exam Edit</h6>
             <button style="float:right;" type="button" class="modal-close btn">&times;</button>
         </div>
             <div class="row mt-5">
@@ -361,6 +314,7 @@ $sl = 1;
           </div>
         </form>
   </div>
+
 
 
 

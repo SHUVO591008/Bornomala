@@ -535,29 +535,51 @@
 
 
       <!-- Manage System menu-->
-      <li class="{{request()->is('class/section') ? 'active' : '' || request()->is('section/part') ? 'active' : '' }} bold">
-
+      <li class="{{request()->is('class/section') ? 'active' : '' || request()->is('section/part') ? 'active' : '' || request()->is('subject/all') ? 'active' : '' || request()->is('exam/all') ? 'active' : '' || request()->is('year/all') ? 'active' : ''}} bold">
 
         <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)"><i class="material-icons dp48">apps</i><span class="menu-title" data-i18n="Website">Manage System</span></a>
           <div class="collapsible-body">
             <ul class="collapsible collapsible-sub" data-collapsible="accordion">
 
-            <!-- Class menu-->
-               <li class="{{request()->is('class/section') ? 'active' : '' || request()->is('section/part') ? 'active' : ''}}"><a class="collapsible-header waves-effect waves-cyan" href="JavaScript:void(0)"><i class="material-icons">radio_button_unchecked</i><span data-i18n="Vertical">Class Setup</span></a>
+              <!-- Manage Setup-->
+               <li class="{{request()->is('class/section') ? 'active' : '' || request()->is('section/part') ? 'active' : '' || request()->is('subject/all') ? 'active' : '' || request()->is('exam/all') ? 'active' : '' || request()->is('year/all') ? 'active' : ''}}"><a class="collapsible-header waves-effect waves-cyan" href="JavaScript:void(0)"><i class="fa-regular fa-folder-open"></i><span data-i18n="Vertical">Manage Setup</span></a>
                 <div class="collapsible-body">
                   <ul class="collapsible" data-collapsible="accordion">
+                     <!-- Year menu-->
+                    <li>
+                      <a href="{{route('all.year')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">Year </span></a>
+                    </li>
+
+                    <!-- Class menu-->
                     <li>
                       <a href="{{route('class.section')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">Class </span></a>
                     </li>
+                    <!-- Section menu-->
                     <li>
                       <a href="{{route('section.part')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">Section </span></a>
                     </li>
+                    <!-- Subject menu-->
                     <li>
                       <a href="{{route('all.subject')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">Subjects </span></a>
                     </li>
+                    <!-- Exam menu-->
                       <li>
-                      <a href=""><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">Exams </span></a>
+                      <a href="{{route('all.exam')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">Exam Type </span></a>
                     </li>
+                  </ul>
+                </div>
+              </li>
+
+                <!-- Admission Setup-->
+                <li class=""><a class="collapsible-header waves-effect waves-cyan" href="JavaScript:void(0)"><i class="fa-regular fa-folder-open"></i><span data-i18n="Vertical">Admission</span></a>
+                <div class="collapsible-body">
+                  <ul class="collapsible" data-collapsible="accordion">
+                     <!-- Year menu-->
+                    <li>
+                      <a href="{{route('new.admission')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">New Admission </span></a>
+                    </li>
+
+          
                   </ul>
                 </div>
               </li>
