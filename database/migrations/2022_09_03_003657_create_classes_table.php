@@ -17,8 +17,8 @@ class CreateClassesTable extends Migration
             $table->id();
             $table->string('class')->nullable();
             $table->string('admission_fees')->nullable();
-            $table->string('monthly_fee')->nullable();
-            $table->string('exam_fee')->nullable();
+            // $table->string('monthly_fee')->nullable();
+            // $table->string('exam_fee')->nullable();
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->timestamps();

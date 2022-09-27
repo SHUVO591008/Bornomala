@@ -86,8 +86,8 @@ class ClassController extends Controller
            $request->validate([
               'class' => 'required|unique:classes|max:55',
               'admission_fees' => 'required|numeric',
-              'monthly_fee' => 'required|numeric',
-              'exam_fee' => 'required|numeric',
+              // 'monthly_fee' => 'required|numeric',
+              // 'exam_fee' => 'required|numeric',
 
 
              ]);
@@ -98,8 +98,8 @@ class ClassController extends Controller
             $data=array();
             $data['class']=$request->class;
             $data['admission_fees']=$request->admission_fees;
-            $data['monthly_fee']=$request->monthly_fee;
-            $data['exam_fee']=$request->exam_fee;
+            // $data['monthly_fee']=$request->monthly_fee;
+            // $data['exam_fee']=$request->exam_fee;
             $data['created_by']= Auth()->user()->id;
 
             $class=DB::table('classes')->insert($data);
@@ -143,16 +143,10 @@ class ClassController extends Controller
                         <small class="erroradmission_fees"></small>
                     </div>
 
-                    <div class="input-field col m12 s12">
-                        <label class="active" for="monthly_fee">Monthly Fee: <span class="red-text">*</span></label>
-                        <input id="monthly_fee" name="monthly_fee" type="text" data-error=".errormonthly_fee" value="'.$class->monthly_fee.'"  class="validate" data-error=".errormonthly_fee" required="">
-                        <small class="errormonthly_fee"></small>
-                    </div>
+                  
 
                     <div class="input-field col m12 s12">
-                        <label class="active" for="exam_fee">Exam Name: <span class="red-text">*</span></label>
-                        <input id="exam_fee" name="exam_fee" type="text" data-error=".errorexam_fee" value="'.$class->exam_fee.'"  class="validate" data-error=".errorexam_fee" required="">
-                        <small class="errorexam_fee"></small>
+                       
                         <input id="hiddenVal" name="hiddenVal" type="hidden" data-error=".errorhiddenVal" value="'.$request->val.'"  class="validate" data-error=".errorhiddenVal" required="">
                     </div>';
     
@@ -185,8 +179,8 @@ class ClassController extends Controller
            $request->validate([
               'class' => 'required|max:55|unique:classes,class,'.$decryptedID,
               'admission_fees' => 'required|numeric',
-              'monthly_fee' => 'required|numeric',
-              'exam_fee' => 'required|numeric',
+              // 'monthly_fee' => 'required|numeric',
+              // 'exam_fee' => 'required|numeric',
 
 
              ]);
@@ -197,8 +191,8 @@ class ClassController extends Controller
         $data=array();
         $data['class']=$request->class;
         $data['admission_fees']=$request->admission_fees;
-        $data['monthly_fee']=$request->monthly_fee;
-        $data['exam_fee']=$request->exam_fee;
+        // $data['monthly_fee']=$request->monthly_fee;
+        // $data['exam_fee']=$request->exam_fee;
         $data['updated_by']= Auth()->user()->id;
         $class=DB::table('classes')->where('id',$decryptedID)->update($data);
          if ($class) {
@@ -248,7 +242,6 @@ class ClassController extends Controller
                     toastr()->error("Sorry!Can't be deleted now.");
                     return redirect()->back();
                   }
-
 
 
                 $class=DB::table('classes')->where('id',$decrypted)->delete();
@@ -347,7 +340,7 @@ class ClassController extends Controller
                     ->where('class_id',$decrypted)
                     ->pluck('id');
 
-                $checkSubject = DB::table('subjects')
+                $checkSubject = DB::table('courses')
                     ->whereIn('section_id',$findSectionId)
                     ->pluck('section_id');
 
@@ -520,7 +513,7 @@ class ClassController extends Controller
                     ->where('class_id',$class_id)
                     ->pluck('id');
 
-                $checkSubject = DB::table('subjects')
+                $checkSubject = DB::table('courses')
                     ->whereIn('section_id',$findSectionId)
                     ->pluck('section_id');
 
@@ -572,7 +565,8 @@ class ClassController extends Controller
                 ->where('class_id',$decrypted)
                 ->pluck('id');
 
-            $check = DB::table('subjects')
+
+            $check = DB::table('courses')
                 ->whereIn('section_id',$findSectionId)
                 ->pluck('section_id');
 

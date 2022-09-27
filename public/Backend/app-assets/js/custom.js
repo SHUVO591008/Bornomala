@@ -987,6 +987,159 @@ $(document).ready(function() {
 });
 
 
+
+ // Course Model------Ajax
+ $(document).on("click", ".editCourse", function() {
+
+    var val = $(this).attr("data-id");
+
+    $.ajax({
+        type: 'GET',
+        url: '/course/edit',
+        
+        data: {
+            val: val,
+        },
+        dataType: 'json',
+        success: function(result) {
+            $('#modeldata').html(result)
+        },
+        error: function(result){
+            alert("fail");
+        },
+
+    });
+
+  
+});
+
+
+
+
+
+
+//Course Information handlebars-template
+$(document).ready(function() {
+
+    //add Course
+
+    $(document).on("click", ".courseadd", function() {
+
+        //handlebars-template code
+        var source = $('#course-template').html();
+        var template = Handlebars.compile(source);
+        var html = template();
+        $('#addRowcourse').append(html);
+
+
+        //id generate
+        const id = "id" + Date.now() + Math.random().toString().substr(2);
+
+        $('#course_name1').attr("id", id);
+        $('#course_fee1').attr("id", "fee" + id);
+        $('#course_type1').attr("id", "type" + id);
+        $('#status1').attr("id", "status" + id);
+
+
+
+        var name = '.' + id;
+        var fee = '.' + "fee" + id;
+        var type = '.' + "type" + id;
+        var status = '.' + "status" + id;
+
+
+        $('#' + id).attr("data-error", name);
+        $('#' + "fee" + id).attr("data-error", fee);
+        $('#' + "type" + id).attr("data-error", type);
+        $('#' + "status" + id).attr("data-error", status);
+
+        $('.errorcourse_name0').attr("class", id);
+        $('.errorcourse_fee0').attr("class", "fee" + id);
+        $('.errorcourse_type0').attr("class", "type" + id);
+        $('.errorStatus0').attr("class", "status" + id);
+
+
+        //script add
+        $('#delete_add_more_item').append('<script>$(".select3").select2();');
+
+
+    });
+
+
+
+    //Remove Button
+    $(document).on('click', ".courseremove", function(event) {
+        var numItems = $('.delete_add_more_item').length
+        if (numItems == 1) {
+            alert('Sorry!It cannot be deleted.');
+        } else {
+            $(this).closest(".delete_add_more_item").remove();
+        }
+    });
+
+
+       //Edit Course
+
+    $(document).on("click", ".courseedit", function() {
+
+        //handlebars-template code
+        var source = $('#course-edit-template').html();
+        var template = Handlebars.compile(source);
+        var html = template();
+        $('#editRowcourse').append(html);
+
+
+        //id generate
+        const id = "id" + Date.now() + Math.random().toString().substr(2);
+
+         $('#course_name2').attr("id", id);
+        $('#course_fee2').attr("id", "fee" + id);
+        $('#course_type2').attr("id", "type" + id);
+        $('#status2').attr("id", "status" + id);
+
+
+
+        var name = '.' + id;
+        var fee = '.' + "fee" + id;
+        var type = '.' + "type" + id;
+        var status = '.' + "status" + id;
+
+
+        $('#' + id).attr("data-error", name);
+        $('#' + "fee" + id).attr("data-error", fee);
+        $('#' + "type" + id).attr("data-error", type);
+        $('#' + "status" + id).attr("data-error", status);
+
+        $('.errorcourse_name3').attr("class", id);
+        $('.errorcourse_fee3').attr("class", "fee" + id);
+        $('.errorcourse_type3').attr("class", "type" + id);
+        $('.errorStatus3').attr("class", "status" + id);
+
+
+        //script add
+        $('#delete_Edit_more_item').append('<script>$(".select3").select2();');
+
+
+    });
+
+
+
+    //Remove Button
+    $(document).on('click', ".courseEditremove", function(event) {
+        var numItems = $('.delete_Edit_more_item').length
+        if (numItems == 1) {
+            alert('Sorry!It cannot be deleted.');
+        } else {
+            $(this).closest(".delete_Edit_more_item").remove();
+        }
+    });
+
+
+
+
+});
+
+
  // Exam Model ----Ajax
  $(document).on("click", ".editExam", function() {
 
@@ -1021,6 +1174,32 @@ $(document).ready(function() {
         $.ajax({
             type: 'GET',
             url: '/year/edit',
+            
+            data: {
+                val: val,
+            },
+            dataType: 'json',
+            success: function(result) {
+                $('#modeldata').html(result)
+            },
+            error: function(result){
+                alert("fail");
+            },
+
+        });
+
+  
+});
+
+
+   //Course Model ----Ajax
+ $(document).on("click", ".editCourse", function() {
+
+        var val = $(this).attr("data-id");
+
+        $.ajax({
+            type: 'GET',
+            url: '/course/edit',
             
             data: {
                 val: val,

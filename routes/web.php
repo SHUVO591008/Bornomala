@@ -368,14 +368,18 @@ Route::group(['middleware' =>'auth:webadmin'], function () {
         });
 
 
-          //subjects routes-----------------------
-        Route::prefix('subject')->group(function () {
-            Route::get('all','Backend\system\Admin\SubjectController@AllSubject')->name('all.subject');  
-            Route::post('insert','Backend\system\Admin\SubjectController@InsertSubject')->name('subject.insert');
-            Route::get('delete/{id}','Backend\system\Admin\SubjectController@DeleteSubject')->name('subject.delete');
-            Route::get('/edit','Backend\system\Admin\SubjectController@EditSubject');
-            Route::post('update','Backend\system\Admin\SubjectController@UpdateSubject')->name('subject.update');
-            Route::get('/get-section-name', 'Backend\system\Admin\SubjectController@getSectionName');
+ 
+
+          //Course routes-----------------------
+        Route::prefix('course')->group(function () {
+            Route::get('all','Backend\system\Admin\CourseController@AllCourse')->name('all.course');  
+            Route::post('insert','Backend\system\Admin\CourseController@InsertCourse')->name('course.insert');
+            Route::post('/status', 'Backend\system\Admin\CourseController@status')->name('course.status');
+            
+            Route::get('delete/{id}','Backend\system\Admin\CourseController@DeleteCourse')->name('course.delete');
+            Route::get('/edit','Backend\system\Admin\CourseController@EditCourse');
+            Route::post('update','Backend\system\Admin\CourseController@UpdateCourse')->name('course.update');
+            Route::get('/get-section-name', 'Backend\system\Admin\CourseController@getSectionName');
         });
 
           //exam routes------------------------

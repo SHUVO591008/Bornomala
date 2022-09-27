@@ -16,7 +16,7 @@ class YearController extends Controller
 
     public function AllYear()
     {
-        $year=DB::table('years')->get();
+        $year=DB::table('years')->orderBy('year')->get();
         return view('Backend.system.year.year',compact('year'));
     }
 

@@ -535,14 +535,14 @@
 
 
       <!-- Manage System menu-->
-      <li class="{{request()->is('class/section') ? 'active' : '' || request()->is('section/part') ? 'active' : '' || request()->is('subject/all') ? 'active' : '' || request()->is('exam/all') ? 'active' : '' || request()->is('year/all') ? 'active' : ''}} bold">
+      <li class="{{request()->is('class/section') ? 'active' : '' || request()->is('section/part') ? 'active' : '' || request()->is('subject/all') ? 'active' : '' || request()->is('exam/all') ? 'active' : '' || request()->is('year/all') ? 'active' : '' || request()->is('course/all') ? 'active' : ''}} bold">
 
         <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)"><i class="material-icons dp48">apps</i><span class="menu-title" data-i18n="Website">Manage System</span></a>
           <div class="collapsible-body">
             <ul class="collapsible collapsible-sub" data-collapsible="accordion">
 
               <!-- Manage Setup-->
-               <li class="{{request()->is('class/section') ? 'active' : '' || request()->is('section/part') ? 'active' : '' || request()->is('subject/all') ? 'active' : '' || request()->is('exam/all') ? 'active' : '' || request()->is('year/all') ? 'active' : ''}}"><a class="collapsible-header waves-effect waves-cyan" href="JavaScript:void(0)"><i class="fa-regular fa-folder-open"></i><span data-i18n="Vertical">Manage Setup</span></a>
+               <li class="{{request()->is('class/section') ? 'active' : '' || request()->is('section/part') ? 'active' : '' || request()->is('subject/all') ? 'active' : '' || request()->is('exam/all') ? 'active' : '' || request()->is('year/all') ? 'active' : ''|| request()->is('course/all') ? 'active' : ''}}"><a class="collapsible-header waves-effect waves-cyan" href="JavaScript:void(0)"><i class="fa-regular fa-folder-open"></i><span data-i18n="Vertical">Manage Setup</span></a>
                 <div class="collapsible-body">
                   <ul class="collapsible" data-collapsible="accordion">
                      <!-- Year menu-->
@@ -558,10 +558,12 @@
                     <li>
                       <a href="{{route('section.part')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">Section </span></a>
                     </li>
-                    <!-- Subject menu-->
+                 
+                    <!-- Course menu-->
                     <li>
-                      <a href="{{route('all.subject')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">Subjects </span></a>
+                      <a href="{{route('all.course')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">Course </span></a>
                     </li>
+
                     <!-- Exam menu-->
                       <li>
                       <a href="{{route('all.exam')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">Exam Type </span></a>

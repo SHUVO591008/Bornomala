@@ -117,12 +117,13 @@ $sl = 1;
                                         ->pluck('id');
 
 
-
-                                    $subject = DB::table('subjects')
+                                    $course = DB::table('courses')
                                         ->whereIn('section_id',$findSectionId)
+                                        ->groupBy('section_id')
                                         ->pluck('section_id');
 
-                                       if($findSectionId==$subject){
+                                         
+                                       if($findSectionId==$course){
                                             $check=1;
                                        }else{
                                           $check=0;

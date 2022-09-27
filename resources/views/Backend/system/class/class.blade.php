@@ -97,8 +97,6 @@ $sl = 1;
                                       <th>SL</th>
                                       <th>Name </th>
                                       <th>Admission Fee</th>
-                                      <th>Monthly Fee</th>
-                                      <th>Exam Fee</th>
                                       <th>Action</th>
                                   </tr>
                                 </thead>
@@ -112,8 +110,7 @@ $sl = 1;
                                           <td>{{ $sl++ }}</td>
                                           <td>{{ $key->class }}</td>
                                           <td>{{ $key->admission_fees }}</td>
-                                          <td>{{ $key->monthly_fee }}</td>
-                                          <td>{{ $key->exam_fee }}</td>
+
 
 
                                           <td>
@@ -223,7 +220,7 @@ $sl = 1;
                         <small class="erroradmission_fees1"></small>
                     </div>
 
-                    <div class="input-field col m12 s12">
+                   <!--  <div class="input-field col m12 s12">
                         <label for="monthly_fee">Monthly Fee: <span class="red-text">*</span></label>
                         <input id="monthly_fee" name="monthly_fee" type="text" data-error=".errormonthly_fee1"  class="validate" data-error=".errormonthly_fee1" required="">
                         <small class="errormonthly_fee1"></small>
@@ -233,7 +230,7 @@ $sl = 1;
                         <label for="exam_fee">Exam Name: <span class="red-text">*</span></label>
                         <input id="exam_fee" name="exam_fee" type="text" data-error=".errorexam_fee1"  class="validate" data-error=".errorexam_fee1" required="">
                         <small class="errorexam_fee1"></small>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 

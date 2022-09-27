@@ -1784,6 +1784,16 @@ $.validator.addMethod("buttonOnOff",
         "Please Enter Valid Data.");
 
 
+//Course Type Formate Validate
+$.validator.addMethod("courseType",
+             function(value, element){
+            if (value == "monthly" || value == "daily" || value=="yearly") {
+                return true;
+            }
+        },
+        "Please Enter Valid Data.");
+
+
  //Dashboard Login form Validate
   $("#login_form").validate({
     rules: {
@@ -3183,14 +3193,14 @@ $(document).ready(function(){
         digits: true,
 
       },
-       monthly_fee: {
-            required: true,
-            digits: true,
-        },
-        exam_fee: {
-            required: true,
-            digits: true,
-        },
+       // monthly_fee: {
+       //      required: true,
+       //      digits: true,
+       //  },
+       //  exam_fee: {
+       //      required: true,
+       //      digits: true,
+       //  },
    
 
       },
@@ -3238,14 +3248,14 @@ $(document).ready(function(){
         digits: true,
 
       },
-       monthly_fee: {
-            required: true,
-            digits: true,
-        },
-        exam_fee: {
-            required: true,
-            digits: true,
-        },
+       // monthly_fee: {
+       //      required: true,
+       //      digits: true,
+       //  },
+       //  exam_fee: {
+       //      required: true,
+       //      digits: true,
+       //  },
          hiddenVal: {
             required: true,
         },
@@ -3414,6 +3424,120 @@ $(document).ready(function(){
         },
         'subject_code[]':{
          required: true,
+        },
+
+      },
+       //For custom messages
+      messages: {
+       
+
+      },
+      errorElement : 'div',
+      errorPlacement: function(error, element) {
+        var placement = $(element).data('error');
+        if (placement) {
+          $(placement).append(error)
+        } else {
+            error.insertAfter(element);
+        }
+    }
+
+  });
+
+ 
+  });
+
+
+
+
+//Course setting form Validate
+
+$(document).ready(function(){
+
+
+ $("#CourseForm").validate({
+
+    rules: {
+       class_id: {
+        required: true,
+
+      },
+       section_id: {
+            required: true,
+        },
+         session_id: {
+            required: true,
+        },
+        'course_name[]':{
+         required: true,
+        },
+        'course_fee[]':{
+         required: true,
+         digits:true,
+        },
+         'course_type[]':{
+         required: true,
+         courseType:true,
+        },
+        'status[]': {
+        required: true,
+        statusActiveInactive:true,
+        },
+     
+       
+
+      },
+       //For custom messages
+      messages: {
+     
+        
+
+      },
+      errorElement : 'div',
+      errorPlacement: function(error, element) {
+        var placement = $(element).data('error');
+        if (placement) {
+          $(placement).append(error)
+        } else {
+            error.insertAfter(element);
+        }
+    }
+
+  });
+
+
+  $("#courseFormUpdate").validate({
+
+    rules: {
+      
+    hiddenID: {
+        required: true,
+
+      },
+    class_id: {
+        required: true,
+
+      },
+       section_id: {
+            required: true,
+        },
+         session_id: {
+            required: true,
+        },
+        'course_name[]':{
+         required: true,
+        },
+        'course_fee[]':{
+         required: true,
+         digits:true,
+        },
+         'course_type[]':{
+         required: true,
+         courseType:true,
+        },
+        'status[]': {
+        required: true,
+        statusActiveInactive:true,
         },
 
       },
