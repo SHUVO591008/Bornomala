@@ -17,35 +17,7 @@ class AjaxController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function varifyuserName(Request $request)
-        {
-
-            $userName = User::where('user_name', $request->username)->get();
-
-            if (count($userName) > 0) {
-                echo 'false';
-            }else{
-               echo 'true';
-
-            } 
-
-           
-        }
-
-    public function varifyemail(Request $request)
-        {
-
-            $email = User::where('email', $request->email)->get();
-
-            if (count($email) > 0) {
-                echo 'false';
-            }else{
-               echo 'true';
-
-            } 
-
-           
-        }
+ 
 
 
     public function varifyadminName(Request $request)

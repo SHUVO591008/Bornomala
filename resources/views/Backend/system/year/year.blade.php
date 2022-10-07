@@ -55,7 +55,7 @@ $sl = 1;
                       <ol class="breadcrumbs mb-0">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a>
                         </li>
-                        
+
                         <li class="breadcrumb-item active">Add/Show
                         </li>
                       </ol>
@@ -65,7 +65,7 @@ $sl = 1;
                 </div>
           </div>
 
-   
+
             <!-- Year settings show-->
               <div class="users-list-table">
                   <div class="card">
@@ -77,7 +77,7 @@ $sl = 1;
 
                             <hr>
 
-                           
+
                         </div>
 
 
@@ -102,15 +102,19 @@ $sl = 1;
                                 </thead>
                                 <tbody>
                                     @foreach($year as $key)
-                                    @php 
+                                    @php
                                     $prodID= Crypt::encrypt($key->id);
-                                   
+
                                      @endphp
                                         <tr>
                                           <td>{{ $sl++ }}</td>
                                           <td>{{ $key->year }}</td>
                                           <td>
-                                          	 @php $prodID= Crypt::encrypt($key->id); @endphp
+                                          	 @php $prodID= Crypt::encrypt($key->id);
+                                                $check = DB::table('courses')->where('session_id',$key->id)->first();
+                                               $admissioncheck = DB::table('admissions')->where('year_id',$key->id)->first();
+                                             @endphp
+
 
                                             <div class="switch">
                                                 <label>
@@ -123,19 +127,21 @@ $sl = 1;
 
                                           </td>
                                           <td>
-                                            
-                                            <a id="editYear" data-id="{{$prodID}}" class="btn-floating waves-effect waves-light amber darken-4 mr-5 modal-trigger editYear" href="#modal3" title="Edit"><i style="font-size: 14px;" class="fa-solid fa-pen-to-square"></i></a> 
 
-                                        
-                                            <a class="delete-confirm btn-floating waves-effect waves-light green darken-1" href="{{ route('year.delete',$prodID) }}" title="Delete"><i style="font-size: 14px;" class="fa-solid fa-trash-can"></i></a>
+                                            <a id="editYear" data-id="{{$prodID}}" class="btn-floating waves-effect waves-light amber darken-4 mr-5 modal-trigger editYear" href="#modal3" title="Edit"><i style="font-size: 14px;" class="fa-solid fa-pen-to-square"></i></a>
 
-                                         
+                                            @if(is_null($check) AND is_null($admissioncheck))
+                                                <a class="delete-confirm btn-floating waves-effect waves-light green darken-1" href="{{ route('year.delete',$prodID) }}" title="Delete"><i style="font-size: 14px;" class="fa-solid fa-trash-can"></i></a>
+                                            @else
+                                                <a onclick="alert('Sorry..! Could not be deleted now.')" class=" btn-floating waves-effect waves-light blue darken-1" href="javascript:void(0)" title="Delete"><i style="font-size: 14px;" class="fa-solid fa-trash-can"></i></a>
+                                            @endif
+
                                           </td>
                                         </tr>
                                       @endforeach
-                    
+
                                 </tbody>
-                               
+
                               </table>
 
                             </div>
@@ -183,7 +189,7 @@ $sl = 1;
                     </button>
                   </div>
                 @endif
-                
+
 
                 @if(session()->has('msg'))
                      <div class="mt-2 card-alert card gradient-45deg-amber-amber">
@@ -272,7 +278,7 @@ $sl = 1;
                     </button>
                   </div>
                 @endif
-                
+
 
                 @if(session()->has('msg'))
                      <div class="mt-2 card-alert card gradient-45deg-amber-amber">

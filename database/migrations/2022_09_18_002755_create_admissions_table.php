@@ -28,12 +28,10 @@ class CreateAdmissionsTable extends Migration
                 $table->string('permanent_address')->nullable();
                 $table->string('gender')->nullable();
                 $table->date('dob')->nullable();
-                $table->string('city')->nullable();
                 $table->string('country')->nullable();
                 $table->integer('class_id')->nullable();
                 $table->integer('section_id')->nullable();
                 $table->integer('year_id')->nullable();
-                $table->integer('course_id')->nullable();
                 $table->string('scholarship')->nullable();
                 $table->string('father_name')->nullable();
                 $table->string('father_occupation')->nullable();
@@ -42,10 +40,10 @@ class CreateAdmissionsTable extends Migration
                 $table->string('nid_number')->nullable();
                 $table->string('gurdian_mobile')->nullable();
                 $table->string('school_collage')->nullable();
+                $table->string('school_collage_class')->nullable();
                 $table->string('blood_group')->nullable();
                 $table->string('admission_fee')->nullable();
                 $table->string('discount')->nullable();
-                $table->string('messege')->nullable();
                 $table->string('student_image')->nullable();
                 $table->string('gurdian_image')->nullable();
                 $table->string('admission_date')->nullable();

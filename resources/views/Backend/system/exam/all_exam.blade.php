@@ -31,6 +31,11 @@ $sl = 1;
 }
 
 
+.modal{
+    width: 80%!important;
+}
+
+
 </style>
 
 
@@ -96,6 +101,7 @@ $sl = 1;
                                   <tr>
                                       <th>SL</th>
                                       <th>Exam Name </th>
+                                       <th>Exam Fee </th>
                                       <th>Status</th>
                                       <th>Action</th>
                                   </tr>
@@ -109,6 +115,7 @@ $sl = 1;
                                         <tr>
                                           <td>{{ $sl++ }}</td>
                                           <td>{{ $key->exam_name }}</td>
+                                          <td>{{ $key->exam_fee }}</td>
                                           <td>
                                           	 @php $prodID= Crypt::encrypt($key->id); @endphp
 
@@ -220,7 +227,14 @@ $sl = 1;
                         <small class="errorexam1"></small>
                     </div>
 
-                     <div class="input-field col m6 s6">
+
+                    <div class="input-field col m3 s3">
+                        <label for="exam_fee">Exam Fee: <span class="red-text">*</span></label>
+                        <input id="exam_fee" name="exam_fee" type="text" data-error=".errorexamfee1"  class="validate" data-error=".errorexamfee1" required="">
+                        <small class="errorexamfee1"></small>
+                    </div>
+
+                     <div class="input-field col m3 s3">
                         <select class="validate" name="status" id="status" data-error=".errorStatus" required="">
 
                         <option  value="" >Select Status</option>

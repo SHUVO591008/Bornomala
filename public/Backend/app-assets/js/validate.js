@@ -1686,6 +1686,10 @@ $(function () {
 //Date Formate Validate
  $.validator.addMethod("dateFormat",
         function(value, element) {
+             if (value == "") {
+                return true;
+            }
+
             var rxDatePattern = /(?:0[1-9]|[12][0-9]|3[01])\/(?:0[1-9]|1[0-2])\/(?:19|20\d{2})/;
             return value.match(rxDatePattern);
         },
@@ -1731,7 +1735,7 @@ $.validator.addMethod("cityFormat",
 //social Formate Validate
 $.validator.addMethod("socialValid",
              function(value, element){
-            if (value == "facebook" || value == "twitter" || value == "linkedIn" || value == "instagram") {
+            if (value == "" ||value == "facebook" || value == "twitter" || value == "linkedIn" || value == "instagram") {
                 return true;
             }
         },
@@ -1793,6 +1797,23 @@ $.validator.addMethod("courseType",
         },
         "Please Enter Valid Data.");
 
+//Blood Group Format  Validate
+$.validator.addMethod("bloodgroupFormat",
+             function(value, element){
+            if (value=="" ||value == "A+" || value == "A-" || value=="B+" || value=="B-" || value=="O+" || value=="O-" || value=="AB+" || value=="AB-") {
+                return true;
+            }
+        },
+        "Please Enter Valid Data.");
+
+//Scholarship Formate Validate
+$.validator.addMethod("scholarshipFormat",
+             function(value, element){
+            if (value == "full_fee" || value == "half_fee") {
+                return true;
+            }
+        },
+        "Please Enter Valid Data.");
 
  //Dashboard Login form Validate
   $("#login_form").validate({
@@ -1827,14 +1848,14 @@ $.validator.addMethod("courseType",
   });
 
 
-//user form Validate
+//Admission form Validate
  $("#formValidate").validate({
     rules:{
         username: {
             required: true,
             minlength: 5,
             remote:{
-                 url: "/users/varifyusername",
+                 url: "/admission/varifyusername",
                  type: "GET",
                  data: {
                     username: function() {
@@ -1850,6 +1871,11 @@ $.validator.addMethod("courseType",
         lastName:{
             required: true,
         },
+         admission_date: {
+            required: true,
+            dateFormat:true,
+
+        },
         phone:{
             required: true,
             phoneFormat:true,
@@ -1860,7 +1886,7 @@ $.validator.addMethod("courseType",
             required: false,
             email:true,
             remote:{
-                 url: "/users/varifyemail",
+                 url: "/admission/varifyemail",
                  type: "GET",
                  data: {
                     email: function() {
@@ -1878,11 +1904,80 @@ $.validator.addMethod("courseType",
             required: true,
             religionFormat: true,
         },
+        blood_group: {
+            required: false,
+            bloodgroupFormat: true,
+        },
         dob: {
-            required: true,
+            required: false,
             dateFormat:true,
 
         },
+
+        image: {
+            required: true,
+        },
+
+        class_id: {
+            required: true,
+        },
+
+        section_id: {
+            required: true,
+        },
+
+        year_id: {
+            required: true,
+        },
+
+        scholarship: {
+            required: true,
+            scholarshipFormat:true,
+        },
+
+        admission_fee: {
+            required: true,
+            digits:true,
+        },
+
+        discount: {
+            required: false,
+            digits:true,
+            max:100
+        },
+
+        father_name: {
+            required: true,
+        },
+
+        father_occupation: {
+            required: true,
+        },
+
+        mother_name: {
+            required: true,
+        },
+
+        mother_occupation: {
+            required: true,
+        },
+
+        gurdian_mobile:{
+            required: true,
+            phoneFormat:true,
+            minlength: 11,
+            maxlength: 11,
+        },
+
+        nid_number:{
+            required: true,
+            digits:true,
+        },
+
+        gurdian_image: {
+            required: true,
+        },
+
         city: {
             required: true,
             cityFormat:true,
@@ -1895,34 +1990,31 @@ $.validator.addMethod("courseType",
             maxlength: 255,
             required: true,
         },
-        image: {
+
+        school_collage: {
+            maxlength: 255,
             required: true,
         },
+        school_collage_class: {
+            maxlength: 255,
+            required: true,
+        },
+       
         'socialicon[]':{
-         required: true,
+         required: false,
          socialValid:true,
+
         },
          'socialUrl[]': {
-             required: true,
+             required: false,
              url: true,
         },
-         role: {
-            required: true,
-            roleValid:true,
-        },
+       
         status: {
             required: true,
             statusActiveInactive:true,
         },
-          'institute_name[]':{
-         required: true,
-        },
-         'subject[]': {
-             required: true,
-        },
-        'qualification[]': {
-             required: true,
-        },
+      
          password: {
             required: true,
              minlength: 6
@@ -1930,6 +2022,10 @@ $.validator.addMethod("courseType",
          cpassword: {
             required: true,
             equalTo: "#password"
+        },
+
+        about: {
+            required: false,
         },
 
 
@@ -3559,7 +3655,44 @@ $(document).ready(function(){
   });
 
  
+});
+
+
+  $("#searchForm").validate({
+
+    rules: {
+      
+        class_id: {
+            required: true,
+
+          },
+       section_id: {
+            required: true,
+        },
+         session_id: {
+            required: true,
+        },
+    
+
+      },
+       //For custom messages
+      messages: {
+       
+
+      },
+      errorElement : 'div',
+      errorPlacement: function(error, element) {
+        var placement = $(element).data('error');
+        if (placement) {
+          $(placement).append(error)
+        } else {
+            error.insertAfter(element);
+        }
+    }
+
   });
+
+ 
 
 
 
@@ -3586,6 +3719,11 @@ $("#examForm").validate({
 
             }
         }
+    },
+    exam_fee: {
+        required: true,
+         digits: true,
+     
     },
      status: {
         required: true,
@@ -3643,6 +3781,11 @@ $("#examFormUpdate").validate({
               }
             }
         }
+    },
+    exam_fee: {
+        required: true,
+         digits: true,
+     
     },
      status: {
         required: true,

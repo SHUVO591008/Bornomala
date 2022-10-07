@@ -29,7 +29,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset("Backend/app-assets/vendors/materialize-stepper/materialize-stepper.min.css") }}">
     <link rel="stylesheet" type="text/css" href="{{ asset("Backend/app-assets/css/pages/form-select2.min.css")}}">
 
- 
+
     <!-- END: VENDOR CSS-->
 
     <!-- BEGIN: Page Level CSS-->
@@ -56,7 +56,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset("Backend/app-assets/css/sweet-alert/sweet-alert.min.css")}}">
 
 
-  
+
 
   <!-- Editor Plugin -->
     <style>
@@ -104,12 +104,12 @@
             if (meta.filetype === 'file') {
                 callback('https://www.google.com/logos/google.jpg', { text: 'My text' });
             }
-        
+
             /* Provide image and alt text for the image dialog */
             if (meta.filetype === 'image') {
                 callback('https://www.google.com/logos/google.jpg', { alt: 'My alt text' });
             }
-        
+
             /* Provide alternative source and posted for the media dialog */
             if (meta.filetype === 'media') {
                 callback('movie.mp4', { source2: 'alt.ogg', poster: 'https://www.google.com/logos/google.jpg' });
@@ -135,7 +135,7 @@
  <!-- Editor Plugin End-->
 
 
-    @toastr_css 
+    @toastr_css
 
     <style>
         /* Chrome, Safari, Edge, Opera */
@@ -481,7 +481,7 @@
                     <li><a href="{{route('contactDetails.add')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">Details</span></a>
                     </li>
 
-                 
+
 
                     <li><a href="{{route('contact.message')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">Contact Message</span></a>
                     </li>
@@ -491,8 +491,8 @@
               </li>
 
 
-               
-    
+
+
 
                <!-- Settings menu-->
                <li class="{{ request()->is('settings/add') ? 'active' : '' || request()->is('settings/edit/*') ? 'active' : '' ||  request()->is('privacy-policy/add') ? 'active' : '' || request()->is('privacy-policy/edit/*') ? 'active' : '' || request()->is('terms-conditions/add') ? 'active' : '' || request()->is('terms-conditions/edit/*') ? 'active' : '' || request()->is('mail/add') ? 'active' : '' }}"><a class="collapsible-header waves-effect waves-cyan" href="JavaScript:void(0)"><i class="material-icons">radio_button_unchecked</i><span data-i18n="Vertical">Settings</span></a>
@@ -518,7 +518,7 @@
                       <a href="{{route('mailSetting.add')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">Email Setting</span></a>
                     </li>
 
-                   
+
 
 
                   </ul>
@@ -535,7 +535,9 @@
 
 
       <!-- Manage System menu-->
-      <li class="{{request()->is('class/section') ? 'active' : '' || request()->is('section/part') ? 'active' : '' || request()->is('subject/all') ? 'active' : '' || request()->is('exam/all') ? 'active' : '' || request()->is('year/all') ? 'active' : '' || request()->is('course/all') ? 'active' : ''}} bold">
+      <li class="{{request()->is('class/section') ? 'active' : '' || request()->is('section/part') ? 'active' : '' || request()->is('subject/all') ? 'active' : '' || request()->is('exam/all') ? 'active' : '' || request()->is('year/all') ? 'active' : '' || request()->is('course/all') ? 'active' : '' || request()->is('admission/new-admission') ? 'active' : '' || request()->is('admission/today-admission') ? 'active' : ''}} bold">
+
+
 
         <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)"><i class="material-icons dp48">apps</i><span class="menu-title" data-i18n="Website">Manage System</span></a>
           <div class="collapsible-body">
@@ -558,7 +560,7 @@
                     <li>
                       <a href="{{route('section.part')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">Section </span></a>
                     </li>
-                 
+
                     <!-- Course menu-->
                     <li>
                       <a href="{{route('all.course')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">Course </span></a>
@@ -573,22 +575,32 @@
               </li>
 
                 <!-- Admission Setup-->
-                <li class=""><a class="collapsible-header waves-effect waves-cyan" href="JavaScript:void(0)"><i class="fa-regular fa-folder-open"></i><span data-i18n="Vertical">Admission</span></a>
+                <li class="{{request()->is('admission/new-admission') ? 'active' : '' || request()->is('admission/today-admission') ? 'active' : ''}}"><a class="collapsible-header waves-effect waves-cyan" href="JavaScript:void(0)"><i class="fa-regular fa-folder-open"></i><span data-i18n="Vertical">Admission</span></a>
                 <div class="collapsible-body">
                   <ul class="collapsible" data-collapsible="accordion">
-                     <!-- Year menu-->
+                     <!-- New Admission menu-->
                     <li>
                       <a href="{{route('new.admission')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">New Admission </span></a>
                     </li>
 
-          
+                    <!-- Today Admission menu-->
+                    <li>
+                        <a href="{{route('today.admission')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">Today Admission </span></a>
+                    </li>
+
+                      <!-- All Admission menu-->
+                        <li>
+                            <a href="{{route('all.admission')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">All Admission </span></a>
+                        </li>
+
+
                   </ul>
                 </div>
               </li>
-               
-    
 
-         
+
+
+
 
 
 
@@ -1286,9 +1298,9 @@
       </div>
     </footer>
     <!-- END: Footer-->
-    
- 
-   
+
+
+
     <!-- BEGIN VENDOR JS-->
     <script src="{{ asset("Backend/app-assets/js/vendors.min.js")}}"></script>
     <!-- BEGIN VENDOR JS-->
@@ -1302,6 +1314,7 @@
 
     <script src="{{ asset("Backend/app-assets/vendors/materialize-stepper/materialize-stepper.min.js") }}"></script>
     <script src="{{ asset("Backend/app-assets/vendors/data-tables/js/dataTables.select.min.js")}}"></script>
+    <script src="{{ asset("Backend/app-assets/vendors/formatter/jquery.formatter.min.js")}}"></script>
 
     <!-- END PAGE VENDOR JS-->
 
@@ -1328,6 +1341,8 @@
 
      <script src="{{asset("Backend/app-assets/js/scripts/advance-ui-modals.min.js")}}"></script>
 
+      <script src="{{asset("Backend/app-assets/js/scripts/form-masks.min.js")}}"></script>
+
 
     <!-- END PAGE LEVEL JS-->
 
@@ -1343,14 +1358,10 @@
 
     <!-- toaster js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" type="text/javascript"></script>
-    
+
     <!-- sweet-alert js -->
     <script src="{{ asset("Backend/app-assets/js/sweet-alert/sweet-alert.init.js")}}"></script>
     <script src="{{ asset("Backend/app-assets/js/sweet-alert/sweet-alert.min.js")}}"></script>
-
-
-
-
 
 
 

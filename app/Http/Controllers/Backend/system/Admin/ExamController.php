@@ -70,6 +70,7 @@ class ExamController extends Controller
             $request->validate([
 
             'exam_name' => 'required|unique:exams|max:100',
+             'exam_fee' => 'required|numeric',
             'status' =>'required|in:active,inactive',
             ],
             [
@@ -81,6 +82,7 @@ class ExamController extends Controller
 
             $data=array();
             $data['exam_name']=$request->exam_name;
+             $data['exam_fee']=$request->exam_fee;
             $data['status']=($request->status=='active')?'1':'0';
             $data['created_by']= Auth()->user()->id;
             $exam=DB::table('exams')->insert($data);
@@ -165,12 +167,18 @@ class ExamController extends Controller
 
                 </script>
                 <div class="input-field col m6 s6">
-                        <label class="active" for="exam_name">Exam Name: <span class="red-text">*</span></label>
+                        <label class="active" for="exam_name2">Exam Name: <span class="red-text">*</span></label>
                         <input id="exam_name2" name="exam_name" type="text" data-error=".errorexam2"  value="'.$exam->exam_name.'"  class="validate" data-error=".errorexam2" required="">
                         <small class="errorexam2"></small>
                     </div>
 
-                     <div class="input-field col m6 s6">
+                     <div class="input-field col m3 s3">
+                        <label class="active" for="exam_fee2">Exam Fee: <span class="red-text">*</span></label>
+                        <input id="exam_fee2" name="exam_fee" type="text" data-error=".errorexamfee2"  value="'.$exam->exam_fee.'"  class="validate" data-error=".errorexamfee2" required="">
+                        <small class="errorexamfee2"></small>
+                    </div>
+
+                     <div class="input-field col m3 s3">
                         <select class="validate" name="status" id="status" data-error=".errorStatus1" required="">
 
                         <option  value="" >Select Status</option>
@@ -208,6 +216,7 @@ class ExamController extends Controller
 
             $request->validate([
             'exam_name' => 'required|max:100|unique:exams,exam_name,'.$decryptedID,
+            'exam_fee' => 'required|numeric',
             'status' =>'required|in:active,inactive',
             ],
             [
@@ -219,6 +228,7 @@ class ExamController extends Controller
             
                 $data=array();
                 $data['exam_name']=$request->exam_name;
+                 $data['exam_fee']=$request->exam_fee;
                 $data['status']=($request->status=='active')?'1':'0';
                 $data['updated_by']= Auth()->user()->id;
 

@@ -16,6 +16,7 @@ class CreateExamsTable extends Migration
         Schema::create('exams', function (Blueprint $table) {
             $table->id();
             $table->string('exam_name')->nullable();
+            $table->string('exam_fee')->nullable();
             $table->boolean('status')->nullable()->comment('0=Inactive And 1=Active');
             $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();

@@ -9,7 +9,6 @@
 
 
 
-
 //social Information handlebars-template
 $(document).ready(function() {
 
@@ -176,6 +175,7 @@ $(document).ready(function() {
     $(".status").on("click", function() {
 
         var sliderLink = window.location.origin + '/slider/status';
+
 
         var link = $(this).attr("data-column");
         var dataId = $(this).attr("data-id");
@@ -1216,3 +1216,40 @@ $(document).ready(function() {
 
   
 });
+
+
+
+     // search
+
+    $(document).on('click','#SearchBtn',function(){
+
+        var class_id = $('#class_id30').val();
+        var section_id = $('#section_id30').val();
+        var session_id = $('#year').val();
+
+        $.ajax({
+            url:"/course/search",
+            type:"get",
+            data:{'session_id':session_id,'class_id':class_id,'section_id':section_id},
+            beforeSend:function(){
+            },
+            success:function(data){
+
+                if(data.msg){
+                    $('#msg_div').fadeIn();
+                    $('#res_message').html(data.msg);
+                    $('#documentResult').fadeOut();
+                   $('#page-length-option').fadeIn();
+                }else{
+                    $('#documentResult').fadeIn();
+                   $('#page-length-option').fadeOut();
+                    $('#msg_div').fadeOut();
+                }
+                var source = $('#document-template-search').html();
+                var template = Handlebars.compile(source);
+                var html = template(data);
+                $("#documentResult").html(html);
+                
+            }
+        });
+    });

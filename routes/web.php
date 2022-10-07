@@ -34,7 +34,7 @@ Route::get('/login', 'Backend\Auth\AuthController@showLoginForm')->name('user-lo
 Route::post('login', 'Backend\Auth\AuthController@login');
 Route::get('/register', 'Backend\Auth\AuthController@showRegistrationForm')->name('user-register');
 Route::post('register', 'Backend\Auth\AuthController@create');
-    
+
 
 
 
@@ -55,10 +55,9 @@ Route::post('register', 'Backend\Auth\AuthController@create');
     Route::get('reset-password/{token}', 'Backend\Auth\AdminAuthController@showResetPasswordForm')->name('reset.password.get');
     Route::match(['GET', 'POST'],'reset-password', 'Backend\Auth\AdminAuthController@submitResetPasswordForm')->name('reset.password.post');
 
-    // verify Routes... 
+    // verify Routes...
     Route::get('/user/verify/{token}', 'Backend\Auth\AdminAuthController@verifyEmail')->name('verifyEmail');
-    Route::get('users/varifyusername','Backend\Ajax\AjaxController@varifyuserName');
-    Route::get('users/varifyemail','Backend\Ajax\AjaxController@varifyemail');
+
 
     Route::get('admin/varifyusername','Backend\Ajax\AjaxController@varifyadminName');
     Route::get('admin/varifyemail','Backend\Ajax\AjaxController@varifyadminemail');
@@ -69,7 +68,7 @@ Route::post('register', 'Backend\Auth\AuthController@create');
 // group route
 Route::group(['middleware' =>'auth:webadmin'], function () {
 
-    
+
         Route::get('/dashboard', 'Backend\Dashboard\DashboardController@index')->name('dashboard');
 
         // User route
@@ -79,7 +78,7 @@ Route::group(['middleware' =>'auth:webadmin'], function () {
             Route::get('/add', 'Backend\User\UserController@Useradd')->name('users.add');
             Route::post('/add', 'Backend\User\UserController@store')->name('users.store');
 
-           
+
 
             Route::get('/edit/{id}', 'Backend\User\UserController@edit')->name('users.edit');
             Route::post('/update/{id}', 'Backend\User\UserController@update')->name('users.update');
@@ -281,6 +280,7 @@ Route::group(['middleware' =>'auth:webadmin'], function () {
             Route::get('/edit/{slug}', 'Backend\gallerySettings\GalleryController@edit')->name('gallery.edit');
             Route::post('/update/{slug}', 'Backend\gallerySettings\GalleryController@update')->name('gallery.update');
             Route::get('/delete/{slug}', 'Backend\gallerySettings\GalleryController@destroy')->name('gallery.delete');
+            //ajax route
             Route::get('varifyname','Backend\Ajax\AjaxController@varifyGroupName');
 
         });
@@ -333,13 +333,14 @@ Route::group(['middleware' =>'auth:webadmin'], function () {
          //Year routes
         Route::prefix('year')->group(function () {
             Route::get('all','Backend\system\Admin\YearController@AllYear')->name('all.year');
-            Route::get('/varify','Backend\system\Admin\YearController@varifyYear');
-            Route::get('/update/varify','Backend\system\Admin\YearController@updatevarify');
             Route::post('insert','Backend\system\Admin\YearController@insert')->name('year.insert');
             Route::post('/status', 'Backend\system\Admin\YearController@status')->name('year.status');
             Route::get('/edit','Backend\system\Admin\YearController@edit');
             Route::post('update','Backend\system\Admin\YearController@Update')->name('year.update');
             Route::get('delete/{id}','Backend\system\Admin\YearController@delete')->name('year.delete');
+            //ajax route
+            Route::get('/varify','Backend\system\Admin\YearController@varifyYear');
+            Route::get('/update/varify','Backend\system\Admin\YearController@updatevarify');
 
         });
 
@@ -347,12 +348,13 @@ Route::group(['middleware' =>'auth:webadmin'], function () {
       //class routes
         Route::prefix('class')->group(function () {
             Route::get('section','Backend\system\Admin\ClassController@ClassSection')->name('class.section');
-            Route::get('/varifyname','Backend\system\Admin\ClassController@varifyname');
-            Route::get('/update/varifyname','Backend\system\Admin\ClassController@updatevarifyname');
             Route::post('insert','Backend\system\Admin\ClassController@ClassInsert')->name('class.insert');
             Route::get('/classedit','Backend\system\Admin\ClassController@EditClass');
             Route::post('update','Backend\system\Admin\ClassController@UpdateClass')->name('class.update');
             Route::get('delete/{id}','Backend\system\Admin\ClassController@DeleteClass')->name('class.delete');
+            //ajax route
+            Route::get('/varifyname','Backend\system\Admin\ClassController@varifyname');
+            Route::get('/update/varifyname','Backend\system\Admin\ClassController@updatevarifyname');
 
         });
 
@@ -363,36 +365,39 @@ Route::group(['middleware' =>'auth:webadmin'], function () {
             Route::get('delete/{id}','Backend\system\Admin\ClassController@DeleteSection')->name('section.delete');
             Route::get('/edit','Backend\system\Admin\ClassController@EditSection');
             Route::match(['GET', 'POST'],'update','Backend\system\Admin\ClassController@UpdateSection')->name('section.update');
+            //ajax route
              Route::get('/get-section-name', 'Backend\system\Admin\ClassController@getSectionName');
 
         });
 
 
- 
+
 
           //Course routes-----------------------
         Route::prefix('course')->group(function () {
-            Route::get('all','Backend\system\Admin\CourseController@AllCourse')->name('all.course');  
+            Route::get('all','Backend\system\Admin\CourseController@AllCourse')->name('all.course');
             Route::post('insert','Backend\system\Admin\CourseController@InsertCourse')->name('course.insert');
             Route::post('/status', 'Backend\system\Admin\CourseController@status')->name('course.status');
-            
             Route::get('delete/{id}','Backend\system\Admin\CourseController@DeleteCourse')->name('course.delete');
             Route::get('/edit','Backend\system\Admin\CourseController@EditCourse');
             Route::post('update','Backend\system\Admin\CourseController@UpdateCourse')->name('course.update');
+            //ajax route
             Route::get('/get-section-name', 'Backend\system\Admin\CourseController@getSectionName');
+            Route::get('/search', 'Backend\system\Admin\CourseController@search')->name('search');
         });
 
           //exam routes------------------------
         Route::prefix('exam')->group(function () {
-            
-             Route::get('all','Backend\system\Admin\ExamController@AllExam')->name('all.exam'); 
-             Route::get('/varifyname','Backend\system\Admin\ExamController@varifyname');
+
+             Route::get('all','Backend\system\Admin\ExamController@AllExam')->name('all.exam');
              Route::get('/update/varifyname','Backend\system\Admin\ExamController@updatevarifyname');
              Route::post('insert','Backend\system\Admin\ExamController@InsertExam')->name('exam.insert');
              Route::post('/status', 'Backend\system\Admin\ExamController@status')->name('exam.status');
              Route::get('delete/{id}','Backend\system\Admin\ExamController@DeleteExam')->name('exam.delete');
              Route::get('/edit','Backend\system\Admin\ExamController@EditExam');
              Route::post('update','Backend\system\Admin\ExamController@UpdateExam')->name('exam.update');
+            //ajax route
+            Route::get('/varifyname','Backend\system\Admin\ExamController@varifyname');
 
         });
 
@@ -400,18 +405,25 @@ Route::group(['middleware' =>'auth:webadmin'], function () {
 
          //admission routes are here---------------
         Route::prefix('admission')->group(function () {
-             Route::get('admin-new-admission','Backend\system\Admin\AdmissionController@NewAdmission')->name('new.admission');
-             Route::post('admin-insert-admission','Backend\system\Admin\AdmissionController@InsertAdmission')->name('insert.admission');
-             Route::get('admin-today-admission','Backend\system\Admin\AdmissionController@TodayAdmission')->name('today.admission');
-             Route::get('admin/delete/admission/{id}','Backend\system\Admin\AdmissionController@DeleteAdmission'); 
-             Route::get('admin/edit/admission/{id}','Backend\system\Admin\AdmissionController@EditAdmission');
-             Route::post('admin/update/admission/{id}','Backend\system\Admin\AdmissionController@UpdateAdmission'); 
-             Route::get('admin/view/admission/{id}','Backend\system\Admin\AdmissionController@ViewAdmission'); 
+             Route::get('new-admission','Backend\system\Admin\AdmissionController@NewAdmission')->name('new.admission');
+             Route::post('insert-admission','Backend\system\Admin\AdmissionController@InsertAdmission')->name('insert.admission');
+             Route::get('today-admission','Backend\system\Admin\AdmissionController@TodayAdmission')->name('today.admission');
+             Route::get('all/admission','Backend\system\Admin\AdmissionController@AllAdmission')->name('all.admission');
+
+             Route::get('delete/admission/{id}','Backend\system\Admin\AdmissionController@DeleteAdmission');
+             Route::get('edit/admission/{id}','Backend\system\Admin\AdmissionController@EditAdmission');
+             Route::post('update/admission/{id}','Backend\system\Admin\AdmissionController@UpdateAdmission');
+             Route::get('view/admission/{id}','Backend\system\Admin\AdmissionController@ViewAdmission');
              Route::get('admin/search/admission','Backend\system\Admin\AdmissionController@SearchAdmission')->name('search.admission');
-             Route::get('admin/all/admission','Backend\system\Admin\AdmissionController@AllAdmission')->name('all.admission'); 
+
              Route::post('admin/search/by/month','Backend\system\Admin\AdmissionController@SearchByMonth')->name('search.by.month');
-             Route::post('admin/search/by/date','Backend\system\Admin\AdmissionController@SearchByDate')->name('search.by.date'); 
+             Route::post('admin/search/by/date','Backend\system\Admin\AdmissionController@SearchByDate')->name('search.by.date');
              Route::post('admin/search/by/class','Backend\system\Admin\AdmissionController@SearchByClass')->name('search.by.class');
+
+             //ajax route
+            Route::get('/fee','Backend\system\Admin\AdmissionController@fee');
+            Route::get('/varifyusername','Backend\system\Admin\AdmissionController@varifyuserName');
+            Route::get('/varifyemail','Backend\system\Admin\AdmissionController@varifyemail');
          });
 
 });

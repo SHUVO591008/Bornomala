@@ -35,7 +35,7 @@ class YearController extends Controller
             }
         }else{
               return response()->json(['check'=>'Sorry!Please not try again.']);
-            
+
          }
 
     }
@@ -56,7 +56,7 @@ class YearController extends Controller
             }
         }else{
             return response()->json(['check'=>'Sorry!Please not try again.']);
-            
+
          }
 
     }
@@ -74,7 +74,7 @@ class YearController extends Controller
             ],
             [
             'year.required' => 'Write Year!',
-               
+
             ]);
 
         try{
@@ -100,7 +100,7 @@ class YearController extends Controller
             return redirect()->back();
 
         }
-    
+
     }
 
     public function status(Request $request)
@@ -117,7 +117,7 @@ class YearController extends Controller
                return response()->json(['check'=>'Sorry!Please not try again.']);
             }
 
-    
+
             if($request->val=="true"){
                  $status =1;
             }else{
@@ -184,7 +184,7 @@ class YearController extends Controller
                         <small class="errorStatus1"></small>
                         <input id="hiddenVal" name="hiddenVal" type="hidden" data-error=".errorhiddenVal" value="'.$request->val.'"  class="validate" data-error=".errorhiddenVal" required="">
                     </div>';
-    
+
 
             return response()->json(@$html);
 
@@ -192,7 +192,7 @@ class YearController extends Controller
             return response()->json(['check'=>'Sorry!Please not try again.']);
          }
 
-        
+
     }
 
     public function Update(Request $request)
@@ -213,11 +213,11 @@ class YearController extends Controller
             ],
             [
             'year.required' => 'Write Year!',
-               
+
             ]);
 
             try{
-            
+
                 $data=array();
                 $data['year']=$request->year;
                 $data['status']=($request->status=='active')?'1':'0';
@@ -227,12 +227,12 @@ class YearController extends Controller
                  if ($year) {
                     toastr()->success('Data Update Successfully.');
                     return redirect()->route('all.year');
-                           
+
                 }else{
 
                     toastr()->error('Nothing to update.');
                     return Redirect()->route('all.year');
-                }  
+                }
 
 
             }catch (\Exception $e) {
@@ -249,7 +249,7 @@ class YearController extends Controller
 
         }
 
-   
+
 
     }
 
@@ -260,6 +260,19 @@ class YearController extends Controller
 
             try{
                 $decrypted = Crypt::decrypt($id);
+                $coursescheck = DB::table('courses')->where('session_id',$decrypted)->first();
+                $admissioncheck = DB::table('admissions')->where('year_id',$decrypted)->first();
+
+                if(!is_null($coursescheck)){
+                  toastr()->error("Sorry!Can't be deleted now.");
+                  return redirect()->back();
+                }
+
+                if(!is_null($admissioncheck)){
+                  toastr()->error("Sorry!Can't be deleted now.");
+                  return redirect()->back();
+                }
+
                 $year=DB::table('years')->where('id',$decrypted)->delete();
                 toastr()->success('Data Deleted Successfully.');
                 return redirect()->route('all.year');

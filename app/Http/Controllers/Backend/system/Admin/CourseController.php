@@ -46,6 +46,8 @@ class CourseController extends Controller
              toastr()->error('Opps!Something went wrong');
             return redirect()->back();
          }
+
+         
     }
 
 
@@ -81,7 +83,7 @@ class CourseController extends Controller
 
              $Clascheck = DB::table('classes')->where('id',$class_id)->first();
              $Sectioncheck = DB::table('sections')->where('id',$request->section_id)->first();
-             $Sessioncheck = DB::table('years')->where('id',$session_id)->first();
+             $Sessioncheck = DB::table('years')->where('id',$session_id)->where('status',1)->first();
 
                 if(is_null($Clascheck)){
                     toastr()->error('Please not try again.');
@@ -431,6 +433,198 @@ class CourseController extends Controller
                 toastr()->error('Opps!Something went wrong.');
                 return redirect()->back();
             }
+
+    }
+
+
+
+    public function search(Request $request)
+    {
+         if($request->ajax()){
+
+
+
+            $request->validate([
+                'class_id' => 'required',
+                'section_id' => 'required',
+                'session_id' => 'required',
+
+
+                ],
+                [
+                    'class_id.required' => 'Please Select Class  !',
+                     'section_id.required' => 'Please Select Section  !',
+                    'session_id.required' => 'Write year name !',
+            ]);
+
+
+
+            $class_id = Crypt::decrypt($request->class_id);
+            $section_id = $request->section_id;
+            $session_id = Crypt::decrypt($request->session_id);
+
+            $searchcourses=DB::table('courses')
+                            ->join('classes','courses.class_id','classes.id')
+                            ->join('sections','courses.section_id','sections.id')
+                            ->join('years','courses.session_id','years.id')
+                            ->where('courses.class_id',$class_id)
+                            ->where('courses.section_id',$section_id)
+                            ->where('courses.session_id',$session_id)
+                             ->select('classes.*','sections.*','years.*','courses.*')
+                            ->get();
+
+                         
+
+
+        //test
+        if(count($searchcourses)==0){
+            $arr = array('msg' => 'Data Not Found!', 'status' =>false);
+            return response()->json($arr);
+        }else{
+
+        $html['header'] = '<th style="text-align: center" colspan="6"><span class="span-th">Class :'.$searchcourses[0]->class.'<br> Year :'.$searchcourses[0]->year.'<br> Section : '.$searchcourses[0]->section.'</span></th>';
+
+        $html['thsource'] = '<th>SL</th>';
+        $html['thsource'] .= '<th>Subject</th>';
+        $html['thsource'] .= '<th>Fee</th>';
+        $html['thsource'] .= '<th>Type</th>';
+        $html['thsource'] .= '<th>Status</th>';
+        $html['thsource'] .= '<th>Action</th>';
+
+ 
+        foreach ($searchcourses as $key => $v) {
+
+            $prodID= Crypt::encrypt($v->id); 
+            $selected = ($v->status==1)?"checked":"";
+         
+            $html[$key]['tdsource'] = '<td>'.($key+1).'</td>';
+            $html[$key]['tdsource'] .= '<td>'.$v->course_name.'</td>';
+            $html[$key]['tdsource'] .= '<td>'.$v->course_fee.'</td>';
+            $html[$key]['tdsource'] .= '<td>'.$v->course_type.'</td>';
+           
+
+              $html[$key]['tdsource'] .= '<td>';
+            $html[$key]['tdsource'] .= '<div class="switch">
+                <label>
+                  <span>Inactive</span>
+                <input data-column="'.route("course.status").'" class="status course" data-id="'.$prodID.'" id="status'.($key+1).'" 
+                   '.$selected.' type="checkbox">
+                  <span class="lever"></span>
+                  <span>Active</span>
+                </label>
+            </div>';
+
+            $html[$key]['tdsource'] .= '</td>';
+
+
+
+            $html[$key]['tdsource'] .= '<td>';
+            $html[$key]['tdsource'] .= '<a id="editCourse" data-id="'.$prodID.'" class="btn-floating waves-effect waves-light amber darken-4 mr-5 modal-trigger editCourse" title="Edit"  href="#modal3"><i style="font-size: 14px;" class="fa-solid fa-pen-to-square"></i></a> 
+
+             <a class="delete-confirm btn-floating waves-effect waves-light green darken-1" href="'.route("course.delete",$prodID).'" title="Delete"><i style="font-size: 14px;" class="fa-solid fa-trash-can"></i></a>';
+
+
+            $html[$key]['tdsource'] .= '</td>';
+
+
+        }
+
+        // script(status and sweet-alert)
+        $html['script'] ='<script>
+        $(document).ready(function() {
+
+        $(".status").on("click", function() {
+        var link = $(this).attr("data-column");
+        var dataId = $(this).attr("data-id");
+        var check = $(this).val($(this).is(":checked"));
+        var val = $(this).val();
+
+        toastr.options = {
+            "closeButton": false,
+            "debug": true,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        $.ajax({
+            url: link,
+            type: "post",
+            data: {
+                dataId: dataId,
+                val: val,
+            },
+            dataType: "json",
+            success: function(result) {
+
+                if(result.check){
+                    toastr.error(result.check);
+                }else{
+                    toastr.success("Data Updated Successfully.");
+                }
+
+            },
+            error: function(erro) {
+                toastr.error("Data Not Updated.");
+
+            },
+        });
+
+
+        });
+
+
+
+    $(".delete-confirm").click(function(e){
+        e.preventDefault();
+        var link =$(this).attr("href");
+        swal({ 
+            title: "Are you sure?",   
+            text: "You will not be able to recover this imaginary file!",   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#DD6B55",   
+            confirmButtonText: "Yes, delete it!",   
+            cancelButtonText: "No, cancel plx!",   
+            closeOnConfirm: false,   
+            closeOnCancel: false 
+        }, function(isConfirm){   
+            if (isConfirm) {    
+                swal("Deleted!", "Your imaginary file has been deleted.", "success");   
+                window.location.href = link;
+            } else {     
+                swal("Cancelled", "Your imaginary file is safe :)", "error");   
+            } 
+        });
+
+
+    });
+    });
+    </script>';
+ // script End
+
+        return response()->json(@$html);
+
+
+        }
+
+         }else{
+            toastr()->error('Opps!Something went wrong.');
+            return redirect()->back();
+         }
+    
+
+
+
 
     }
 
