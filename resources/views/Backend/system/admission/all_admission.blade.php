@@ -48,6 +48,7 @@ $sl = 1;
   display: block;
   overflow: hidden;
   width: 100%;
+  height: 39px;
 }
 
 table.table td h2.table-avatar {
@@ -67,6 +68,8 @@ table.table td h2 span {
   font-size: 12px;
   margin-top: 3px;
 }
+
+
 
 
 </style>
@@ -110,18 +113,68 @@ table.table td h2 span {
                 <div class="card-content">
                     <section class="users-list-wrapper section">
 
-                                <div  class="card-header col m12 s12">
-                                    <h4 style="text-align: center;background: #d2ef5e;color: black;padding: 10px;    font-weight: 700;" class="General card-title ">All Admission Table-
-                                       <span>Total Student:{{count($data)}}</span>
-                                        <a href="{{ route('new.admission') }}" class="mb-6 btn waves-effect waves-light darken-1" style="float: right;background-color: black;"> <i class="fas fa-plus-circle"></i> New Admission</a>
+                            
+                                <div  class="col m12 s12">
+                                    
+                                    <h4 style="text-align: center;background: #d2ef5e;color: black;padding: 10px;    font-weight: 700;" class="General card-title ">All Admission Table
+                                       
+                                        <a href="{{ route('new.admission') }}" class="btn waves-effect waves-light darken-1" style="float: right;background-color: black;"> <i class="fas fa-plus-circle"></i> New Admission</a>
                                     </h4>
 
                                     <hr>
-
-
+                                    
                                 </div>
 
+                                <?php
+                                    $today_admission=DB::table('admissions')->whereDate('admissions.created_at',\Carbon\Carbon::today())->get();
+                                    $active_stu =  DB::table('admissions')->where('status','active')->get();
+                                    $inactive_stu =  DB::table('admissions')->where('status','inactive')->get();
+                                ?>
+
+                               
+                                
+                            <div class="header_div col m12 s12 l12 pb-2">
+                                <div class="row">
+                                    <div style="text-align: center" class="col m3 s3 l3">
+                                        <span style="float: none;padding:5px" class="">Today Admission Student:{{count($today_admission)}}</span>
+                                    </div>
+
+                                    <div style="text-align: center" class="col m3 s3 l3">
+                                        <span style="float: none;padding:5px" class="">Active Student:{{count($active_stu)}}</span>
+                                    </div>
+
+                                    <div style="text-align: center" class="col m3 s3 l3">
+                                        <span style="float: none;padding:5px" class="">Inactive Student:{{count($inactive_stu)}}</span>
+                                    </div>
+                                    <div style="text-align: center" class="col m3 s3 l3">
+                                        <span style="float: none;padding:5px" class="">Total Student:{{count($data)}}</span>
+                                    </div>
+                                </div>
+
+                                <hr>
+                            </div>
+                             
+
                                 {{-- <i class="fas fa-plus-circle"></i> --}}
+
+                        <!-- alert msg -->
+                            <div class="col m12 s12">
+                                <div id="msg_div" style="display:none;" class="card-alert card gradient-45deg-light-blue-cyan">
+                                    <div   class="card-content white-text">
+                                    <p>
+                                        <i class="material-icons">info_outline</i> INFO :
+                                        <span id="res_message">
+
+                                        </span>
+                                    </p>
+                                    </div>
+                                    <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+
+                            </div>
+                        <!-- alert msg end-->
 
                         <div class="users-list-filter">
                         <div class="">
@@ -190,7 +243,7 @@ table.table td h2 span {
                                        </div>
 
                                         <div class="col s12 m6 l3 display-flex align-items-center show-btn">
-                                          <button id="SearchBtn"  class="btn btn-block indigo waves-effect waves-light">Show</button>
+                                          <button id="admissionSearchBtn"  class="btn btn-block indigo waves-effect waves-light">Show</button>
                                         </div>
 
                                     </form>
@@ -204,7 +257,31 @@ table.table td h2 span {
                             <div class="card-content">
                             <!-- datatable start -->
                             <div class="responsive-table">
-                                <table id="users-list-datatable" class="table responsive-table bordered centered">
+
+                                  <!-- Ajax table -->
+                                  <div id="documentResult"></div>
+                                  <script id="admission-template-search" type="text/x-handlebars-template">
+                                      @{{{script}}}
+                                      <table class="table display bordered responsive-table centered" style="width: 100%">
+                                              <thead>
+                                            
+                                                  <tr>
+                                                    @{{{thsource}}}
+                                                  </tr>
+                                              </thead>
+                                              <tbody>
+                                                  @{{#each this}}
+                                                  <tr>
+                                                      @{{{tdsource}}}
+                                                  </tr>
+                                                  @{{/each}}
+                                              </tbody>
+                                      </table>
+
+                                  </script>
+                                   <!-- Ajax table end-->
+
+                                <table id="page-length-option" class="table responsive-table bordered centered">
                                 <thead>
                                     <tr>
 
@@ -248,9 +325,10 @@ table.table td h2 span {
                                         {{ $key->first_name }} {{ $key->last_name }}
                                     </td>
                                     <td>
-                                        {{$key->email}}
-                                        <span style="display:block">SM:{{$key->mobile}}</span>
-                                        <span style="display:block">GM:{{$key->gurdian_mobile}}</span>
+                                   
+                                        {{ ($key->email==null)?'': $key->email}}
+                                        <span style="display:block">S.Mobile: {{ ($key->mobile==null)?'N/A': $key->mobile}}  </span>
+                                        <span style="display:block">G.Mobile:{{ ($key->mobile==null)?'N/A': $key->gurdian_mobile}}</span>
                                     </td>
                                     <td>{{$key->gender}}</td>
                                     <td>{{ $key->class }}</td>
@@ -272,21 +350,23 @@ table.table td h2 span {
                                         <div class="switch">
                                             <label>
                                             <span>Inactive</span>
-                                            <input data-column="{{route('slider.status')}}" class="status" data-id="{{$UserID}}" id="status" {{($key->status=="active")?'checked':''}} type="checkbox">
+                                            <input data-column="{{route('status.admission')}}" class="status" data-id="{{$UserID}}" id="status" {{($key->status=="active")?'checked':''}} type="checkbox">
                                             <span class="lever"></span>
                                             <span>Active</span>
                                             </label>
                                         </div>
                                     </td>
                                     <td>
-                                        <a title="Edit" style="margin-right: 10px;" href="page-users-edit.html"><i class="material-icons">edit</i></a>
+                                        <a title="Edit" style="margin-right: 10px;" href="{{route('admission.edit',$UserID)}}"><i class="material-icons">edit</i></a>
 
-                                        <a style="margin-right: 10px;" title="View" href="{{route('users.view',$UserID)}}"><i class="material-icons">remove_red_eye</i></a>
+                                        <a style="margin-right: 10px;" title="View" href="{{route('admission.view',$UserID)}}"><i class="material-icons">remove_red_eye</i></a>
 
-                                        <a style="margin-right: 10px;" class="" title="Email" href="page-users-view.html"><i style="font-size: 19px;" class=" fa-solid fa-envelope-open-text"></i></a>
+                                        @if(!$key->email==null)
+                                        <a style="margin-right: 10px;" class="" title="Email" href=""><i style="font-size: 19px;" class=" fa-solid fa-envelope-open-text"></i></a>
+                                        @endif
 
-                                        @if(!$key->mobile==null)
-                                        <a style="margin-right: 10px;" class="" title="SMS" href="page-users-view.html"><i style="font-size: 19px;" class="fa-solid fa-comment-sms"></i></a>
+                                        @if(!$key->mobile==null || !$key->gurdian_mobile==null)
+                                        <a style="margin-right: 10px;" class="" title="SMS" href=""><i style="font-size: 19px;" class="fa-solid fa-comment-sms"></i></a>
                                         @endif
 
 

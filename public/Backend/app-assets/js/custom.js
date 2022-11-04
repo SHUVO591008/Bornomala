@@ -1219,7 +1219,7 @@ $(document).ready(function() {
 
 
 
-     // search
+     // course search
 
     $(document).on('click','#SearchBtn',function(){
 
@@ -1253,3 +1253,41 @@ $(document).ready(function() {
             }
         });
     });
+
+
+// admission search
+
+$(document).on('click','#admissionSearchBtn',function(){
+
+var class_id = $('#class_id30').val();
+var section_id = $('#section_id30').val();
+var session_id = $('#year').val();
+
+    $.ajax({
+        url:"/admission/search",
+        type:"get",
+        data:{'session_id':session_id,'class_id':class_id,'section_id':section_id},
+        beforeSend:function(){
+        },
+        success:function(data){
+
+            if(data.msg){
+                $('#msg_div').fadeIn();
+                $('#res_message').html(data.msg);
+                $('#documentResult').fadeOut();
+                $('#page-length-option').fadeIn();
+                $('.dataTables_wrapper').fadeIn();
+            }else{
+                $('#documentResult').fadeIn();
+                $('#page-length-option').fadeOut();
+                $('.dataTables_wrapper').fadeOut();
+                $('#msg_div').fadeOut();
+            }
+            var source = $('#admission-template-search').html();
+            var template = Handlebars.compile(source);
+            var html = template(data);
+            $("#documentResult").html(html);
+            
+        }
+    });
+});

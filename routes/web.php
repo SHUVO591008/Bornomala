@@ -37,8 +37,6 @@ Route::post('register', 'Backend\Auth\AuthController@create');
 
 
 
-
-
 // Backend route
     //Admin Auth Route
     Route::get('dashboard/login', 'Backend\Auth\AdminAuthController@showLoginForm')->name('login');
@@ -392,12 +390,12 @@ Route::group(['middleware' =>'auth:webadmin'], function () {
              Route::get('all','Backend\system\Admin\ExamController@AllExam')->name('all.exam');
              Route::get('/update/varifyname','Backend\system\Admin\ExamController@updatevarifyname');
              Route::post('insert','Backend\system\Admin\ExamController@InsertExam')->name('exam.insert');
-             Route::post('/status', 'Backend\system\Admin\ExamController@status')->name('exam.status');
              Route::get('delete/{id}','Backend\system\Admin\ExamController@DeleteExam')->name('exam.delete');
              Route::get('/edit','Backend\system\Admin\ExamController@EditExam');
              Route::post('update','Backend\system\Admin\ExamController@UpdateExam')->name('exam.update');
             //ajax route
             Route::get('/varifyname','Backend\system\Admin\ExamController@varifyname');
+            Route::post('/status', 'Backend\system\Admin\ExamController@status')->name('exam.status');
 
         });
 
@@ -408,22 +406,28 @@ Route::group(['middleware' =>'auth:webadmin'], function () {
              Route::get('new-admission','Backend\system\Admin\AdmissionController@NewAdmission')->name('new.admission');
              Route::post('insert-admission','Backend\system\Admin\AdmissionController@InsertAdmission')->name('insert.admission');
              Route::get('today-admission','Backend\system\Admin\AdmissionController@TodayAdmission')->name('today.admission');
-             Route::get('all/admission','Backend\system\Admin\AdmissionController@AllAdmission')->name('all.admission');
+             Route::get('all','Backend\system\Admin\AdmissionController@AllAdmission')->name('all.admission');
+             Route::get('edit/{id}','Backend\system\Admin\AdmissionController@edit')->name('admission.edit');
+             Route::post('update/{id}','Backend\system\Admin\AdmissionController@UpdateAdmission')->name('admission.update');
+             Route::get('view/{id}','Backend\system\Admin\AdmissionController@ViewAdmission')->name('admission.view');
+
+              //ajax route
+            Route::get('/fee','Backend\system\Admin\AdmissionController@fee');
+            Route::get('/varifyusername','Backend\system\Admin\AdmissionController@varifyuserName');
+            Route::get('/varifyemail','Backend\system\Admin\AdmissionController@varifyemail');
+            Route::get('/search', 'Backend\system\Admin\AdmissionController@search')->name('search');
+            Route::post('/status', 'Backend\system\Admin\AdmissionController@status')->name('status.admission');
+
 
              Route::get('delete/admission/{id}','Backend\system\Admin\AdmissionController@DeleteAdmission');
-             Route::get('edit/admission/{id}','Backend\system\Admin\AdmissionController@EditAdmission');
              Route::post('update/admission/{id}','Backend\system\Admin\AdmissionController@UpdateAdmission');
              Route::get('view/admission/{id}','Backend\system\Admin\AdmissionController@ViewAdmission');
              Route::get('admin/search/admission','Backend\system\Admin\AdmissionController@SearchAdmission')->name('search.admission');
-
              Route::post('admin/search/by/month','Backend\system\Admin\AdmissionController@SearchByMonth')->name('search.by.month');
              Route::post('admin/search/by/date','Backend\system\Admin\AdmissionController@SearchByDate')->name('search.by.date');
              Route::post('admin/search/by/class','Backend\system\Admin\AdmissionController@SearchByClass')->name('search.by.class');
 
-             //ajax route
-            Route::get('/fee','Backend\system\Admin\AdmissionController@fee');
-            Route::get('/varifyusername','Backend\system\Admin\AdmissionController@varifyuserName');
-            Route::get('/varifyemail','Backend\system\Admin\AdmissionController@varifyemail');
+            
          });
 
 });

@@ -2051,7 +2051,182 @@ $.validator.addMethod("scholarshipFormat",
       error.insertAfter(element);
       }
     }
- })
+ });
+
+
+ //Admission update form Validate
+ $("#UpdateformValidate").validate({
+    rules:{
+   
+        firstName:{
+            required: true,
+        },
+        lastName:{
+            required: true,
+        },
+         admission_date: {
+            required: true,
+            dateFormat:true,
+
+        },
+        phone:{
+            required: true,
+            phoneFormat:true,
+            minlength: 11,
+            maxlength: 11,
+        },
+      
+         gender: {
+            required: true,
+            genderFormat:true,
+
+        },
+        religion: {
+            required: true,
+            religionFormat: true,
+        },
+        blood_group: {
+            required: false,
+            bloodgroupFormat: true,
+        },
+        dob: {
+            required: false,
+            dateFormat:true,
+
+        },
+
+        image: {
+            required: false,
+        },
+
+        class_id: {
+            required: true,
+        },
+
+        section_id: {
+            required: true,
+        },
+
+        year_id: {
+            required: true,
+        },
+
+        scholarship: {
+            required: true,
+            scholarshipFormat:true,
+        },
+
+        admission_fee: {
+            required: true,
+            digits:true,
+        },
+
+        discount: {
+            required: false,
+            digits:true,
+            max:100
+        },
+
+        father_name: {
+            required: true,
+        },
+
+        father_occupation: {
+            required: true,
+        },
+
+        mother_name: {
+            required: true,
+        },
+
+        mother_occupation: {
+            required: true,
+        },
+
+        gurdian_mobile:{
+            required: true,
+            phoneFormat:true,
+            minlength: 11,
+            maxlength: 11,
+        },
+
+        nid_number:{
+            required: true,
+            digits:true,
+        },
+
+        gurdian_image: {
+            required: false,
+        },
+
+        city: {
+            required: true,
+            cityFormat:true,
+        },
+         address1: {
+            maxlength: 255,
+            required: true,
+        },
+         address2: {
+            maxlength: 255,
+            required: true,
+        },
+
+        school_collage: {
+            maxlength: 255,
+            required: true,
+        },
+        school_collage_class: {
+            maxlength: 255,
+            required: true,
+        },
+       
+        'socialicon[]':{
+         required: false,
+         socialValid:true,
+
+        },
+         'socialUrl[]': {
+             required: false,
+             url: true,
+        },
+       
+        status: {
+            required: true,
+            statusActiveInactive:true,
+        },
+      
+      
+
+        about: {
+            required: false,
+        },
+
+
+
+    },
+
+       //For custom messages
+      messages: {
+        username:{
+            remote: 'The username is already in use!'
+        },
+        email:{
+            remote: 'The Email is already in use!'
+        },
+
+      },
+      errorElement : 'div',
+      errorPlacement: function(error, element) {
+        var placement = $(element).data('error');
+        if (placement) {
+          $(placement).append(error)
+        } else {
+      error.insertAfter(element);
+      }
+    }
+ });
+
  $('select').on("change", function(e) {
     $(this).valid()
 });

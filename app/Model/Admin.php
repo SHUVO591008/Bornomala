@@ -14,13 +14,13 @@ class Admin extends Authenticatable
    
     protected $guarded = [];
 
-    public function usersocials(){
-        return $this->hasMany('App\Model\user_social','user_id');
-    }
+    // public function adminsocials(){
+    //     return $this->hasMany('App\Model\admission_socials','admission_id');
+    // }
 
-    public function education(){
-        return $this->hasMany('App\Model\teacher_qualification','user_id');
-    }
+    // public function education(){
+    //     return $this->hasMany('App\Model\teacher_qualification','user_id');
+    // }
 
     public function verifyUser(){
         return $this->hasOne('App\verifyAdmin','user_id');

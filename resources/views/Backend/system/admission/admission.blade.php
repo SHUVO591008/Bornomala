@@ -32,7 +32,7 @@
                       <ol class="breadcrumbs mb-0">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a>
                         </li>
-                        <li class="breadcrumb-item"><a href="{{ route('users.list') }}">Admission List</a>
+                        <li class="breadcrumb-item"><a href="{{ route('all.admission') }}">Admission List</a>
                         </li>
                         <li class="breadcrumb-item active">New Admission
                         </li>
@@ -449,38 +449,38 @@
                                             
 
                                                 <div class="addRow" id="addRow">
-                                            <div id="delete_add_more_item" class="delete_add_more_item">
-                                                    <div class="row">
-                                                        <div class="input-field col m3 s6">
-                                                             
-                                                                <select class="select2 browser-default validate" name="socialicon[]" id="socialicon" data-error=".socialicon30" required="">
-                                                                    <option value="" selected> <i class="fab fa-twitter"></i> Select Social Link</option>
-                                                                    <option {{ old('socialicon.0') == 'facebook' ? "selected" : "" }}  value="facebook">Facebook</option>
-                                                                    <option {{ old('socialicon.0') == 'twitter' ? "selected" : "" }}  value="twitter">Twitter</option>
-                                                                    <option {{ old('socialicon.0') == 'linkedIn' ? "selected" : "" }}  value="linkedIn">LinkedIn</option>
-                                                            <option {{ old('socialicon.0') == 'instagram' ? "selected" : "" }}  value="instagram">Instagram</option>      
-                                                                </select>
+                                                    <div id="delete_add_more_item" class="delete_add_more_item">
+                                                            <div class="row">
+                                                                <div class="input-field col m3 s6">
+                                                                    
+                                                                        <select class="select2 browser-default validate" name="socialicon[]" id="socialicon" data-error=".socialicon30" required="">
+                                                                            <option value="" selected> <i class="fab fa-twitter"></i> Select Social Link</option>
+                                                                            <option {{ old('socialicon.0') == 'facebook' ? "selected" : "" }}  value="facebook">Facebook</option>
+                                                                            <option {{ old('socialicon.0') == 'twitter' ? "selected" : "" }}  value="twitter">Twitter</option>
+                                                                            <option {{ old('socialicon.0') == 'linkedIn' ? "selected" : "" }}  value="linkedIn">LinkedIn</option>
+                                                                    <option {{ old('socialicon.0') == 'instagram' ? "selected" : "" }}  value="instagram">Instagram</option>      
+                                                                        </select>
 
-                                                           <small class="socialicon30"></small>
-                                                        </div>
+                                                                <small class="socialicon30"></small>
+                                                                </div>
 
-                                                        <div class="input-field col m7 s12">
-                                                            <label>Url</label>
-                                                            <input value="{{old('socialUrl.0')}}"  name="socialUrl[]" class="validate" type="url">
-                                                        </div>
-
-
+                                                                <div class="input-field col m7 s12">
+                                                                    <label>Url</label>
+                                                                    <input value="{{old('socialUrl.0')}}"  name="socialUrl[]" class="validate" type="url">
+                                                                </div>
 
 
-                                                        <div class="input-field col m2 s6">
-                                                            <div id="add" class="btn-light btn add"><i class="fas fa-plus-circle"></i></div>
 
-                                                            <div class="red btn removeeventmore"><i class="fas fa-minus-circle"></i>
+
+                                                                <div class="input-field col m2 s6">
+                                                                    <div id="add" class="btn-light btn add"><i class="fas fa-plus-circle"></i></div>
+
+                                                                    <div class="red btn removeeventmore"><i class="fas fa-minus-circle"></i>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            </div>
                                         </div>
 
                                         <div class="row ">
@@ -655,7 +655,6 @@ function myFunction(argument) {
     })
 
 }
-
 </script>      
 
 <!-- x-handlebars-template social Information-->

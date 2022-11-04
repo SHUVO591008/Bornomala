@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-use App\User;
+use App\Model\Admin;
 use Auth;
 use Cache;
 use Carbon\Carbon;
@@ -22,11 +22,13 @@ class ActivityByUser
     {
      
 
-            if (Auth::check()) {
+            if (Auth::guard('webadmin')->check()) {
+                
                 $expiresAt = Carbon::now()->addMinutes(1); // keep online for 1 min
-                Cache::put('user-is-online-' . Auth::user()->id, true, $expiresAt);
+            
+                Cache::put('user-is-online-' . Auth::guard('webadmin')->id(), true, $expiresAt);
                 // last seen
-                User::where('id', Auth::user()->id)->update(['last_login' => (new \DateTime())->format("Y-m-d H:i:s")]);
+                Admin::where('id', Auth::guard('webadmin')->id())->update(['last_login' => (new \DateTime())->format("Y-m-d H:i:s")]);
             }
 
         

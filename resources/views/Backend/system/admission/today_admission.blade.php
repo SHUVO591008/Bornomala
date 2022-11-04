@@ -48,6 +48,7 @@ $sl = 1;
   display: block;
   overflow: hidden;
   width: 100%;
+  height: 39px;
 }
 
 table.table td h2.table-avatar {
@@ -112,7 +113,7 @@ table.table td h2 span {
                                 <div  class="card-header col m12 s12">
                                     <h4 style="text-align: center;background: #d2ef5e;color: black;padding: 10px;    font-weight: 700;" class="General card-title ">Today Admission Table ({{ date('d-m-Y') }})-
 
-                                        <span>Total Student:{{count($admission)}}</span>
+                                        <span>Today Admission Student:{{count($admission)}}</span>
                                         <a href="{{ route('new.admission') }}" class="mb-6 btn waves-effect waves-light darken-1" style="float: right;background-color: black;"><i class="fas fa-plus-circle"></i>  New Admission</a>
                                     </h4>
 
