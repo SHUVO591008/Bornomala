@@ -535,7 +535,7 @@
 
 
       <!-- Manage System menu-->
-      <li class="{{request()->is('class/section') ? 'active' : '' || request()->is('section/part') ? 'active' : '' || request()->is('subject/all') ? 'active' : '' || request()->is('exam/all') ? 'active' : '' || request()->is('year/all') ? 'active' : '' || request()->is('course/all') ? 'active' : '' || request()->is('admission/new-admission') ? 'active' : '' || request()->is('admission/today-admission') ? 'active' : '' ||  request()->is('admission/all') ? 'active' : '' }} bold">
+      <li class="{{request()->is('class/section') ? 'active' : '' || request()->is('section/part') ? 'active' : '' || request()->is('subject/all') ? 'active' : '' || request()->is('exam/all') ? 'active' : '' || request()->is('year/all') ? 'active' : '' || request()->is('course/all') ? 'active' : '' || request()->is('admission/new-admission') ? 'active' : '' || request()->is('admission/today-admission') ? 'active' : '' ||  request()->is('admission/all') ? 'active' : '' || request()->is('admission/edit/*') ? 'active' : '' }} bold">
 
 
 
@@ -575,7 +575,7 @@
               </li>
 
                 <!-- Admission Setup-->
-                <li class="{{request()->is('admission/new-admission') ? 'active' : '' || request()->is('admission/today-admission') ? 'active' : '' || request()->is('admission/all') ? 'active' : '' }}"><a class="collapsible-header waves-effect waves-cyan" href="JavaScript:void(0)"><i class="fa-regular fa-folder-open"></i><span data-i18n="Vertical">Admission</span></a>
+                <li class="{{request()->is('admission/new-admission') ? 'active' : '' || request()->is('admission/today-admission') ? 'active' : '' || request()->is('admission/all') ? 'active' : '' || request()->is('admission/edit/*') ? 'active' : '' }}"><a class="collapsible-header waves-effect waves-cyan" href="JavaScript:void(0)"><i class="fa-regular fa-folder-open"></i><span data-i18n="Vertical">Admission</span></a>
                 <div class="collapsible-body">
                   <ul class="collapsible" data-collapsible="accordion">
                      <!-- New Admission menu-->
@@ -597,6 +597,22 @@
                   </ul>
                 </div>
               </li>
+
+                 <!-- Message Setup-->
+                 <li class=""><a class="collapsible-header waves-effect waves-cyan" href="JavaScript:void(0)"><i class="fa-regular fa-folder-open"></i><span data-i18n="Vertical">Message</span></a>
+                  <div class="collapsible-body">
+                    <ul class="collapsible" data-collapsible="accordion">
+                       <!-- New Admission menu-->
+                      <li>
+                        <a href="{{route('new.admission')}}"><i class="material-icons dp48">arrow_forward</i><span data-i18n="Modern Menu">Gmail </span></a>
+                      </li>
+  
+                 
+  
+  
+                    </ul>
+                  </div>
+                </li>
 
 
 

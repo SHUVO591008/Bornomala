@@ -427,8 +427,16 @@ Route::group(['middleware' =>'auth:webadmin'], function () {
              Route::post('admin/search/by/date','Backend\system\Admin\AdmissionController@SearchByDate')->name('search.by.date');
              Route::post('admin/search/by/class','Backend\system\Admin\AdmissionController@SearchByClass')->name('search.by.class');
 
+            //Admission Gmail routes
+            Route::get('gmail/{id}','Backend\system\Admin\gmailController@singlegmail')->name('admission.singlegmail');
+            Route::post('send/{id}','Backend\system\Admin\gmailController@store')->name('gmail.store');
+            Route::get('gmail/all','Backend\system\Admin\gmailController@all')->name('gmail.all');
+
+
             
          });
+
+       
 
 });
 

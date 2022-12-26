@@ -220,7 +220,7 @@ table.table td h2 span {
                                         </div>
 
 
-                                       <div class="col s12 m6 l3">
+                                       <div class="col s12 m6 l2">
                                           <label for="users-list-verified">Year</label>
                                               <div style="z-index: 0;" class="input-field">
 
@@ -242,7 +242,24 @@ table.table td h2 span {
                                           </div>
                                        </div>
 
-                                        <div class="col s12 m6 l3 display-flex align-items-center show-btn">
+                                       <div class="col s12 m6 l2">
+                                        <label for="users-list-verified">Status</label>
+                                            <div  class="input-field">
+
+                                            <select class="select2 browser-default validate" name="status_stu" id="status_stu" data-error=".status_stu" required="">
+                                                <option value="" selected disabled="">Select Status</option>
+
+                                                <option value="active">Active</option>
+                                                <option value="inactive">Inactive</option>
+                                                
+                                            </select>
+
+                                                <small class="status_stu"></small>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col s12 m6 l2 display-flex align-items-center show-btn">
                                           <button id="admissionSearchBtn"  class="btn btn-block indigo waves-effect waves-light">Show</button>
                                         </div>
 
@@ -362,7 +379,7 @@ table.table td h2 span {
                                         <a style="margin-right: 10px;" title="View" href="{{route('admission.view',$UserID)}}"><i class="material-icons">remove_red_eye</i></a>
 
                                         @if(!$key->email==null)
-                                        <a style="margin-right: 10px;" class="" title="Email" href=""><i style="font-size: 19px;" class=" fa-solid fa-envelope-open-text"></i></a>
+                                        <a style="margin-right: 10px;" class="" title="Email" href="{{route('admission.singlegmail',$UserID)}}"><i style="font-size: 19px;" class=" fa-solid fa-envelope-open-text"></i></a>
                                         @endif
 
                                         @if(!$key->mobile==null || !$key->gurdian_mobile==null)

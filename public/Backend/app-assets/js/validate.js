@@ -3847,6 +3847,10 @@ $(document).ready(function(){
          session_id: {
             required: true,
         },
+        status_stu: {
+            required: true,
+            statusActiveInactive:true,
+        },
     
 
       },
@@ -4104,6 +4108,55 @@ $("#yearFormUpdate").validate({
         }
     },
     
+
+
+});
+
+
+//Gmail form Validate
+
+$(document).ready(function(){
+
+    $("#gmailSettingsubmit").click( function(e) {
+
+            var text = tinyMCE.activeEditor.getContent();
+            if(text === "" || text === null){
+                $("#gamilValid").html("<span>This field is required</span>");
+                return false;
+            } else {
+                $("#gamilValid").html("");
+            }
+
+
+         $("#gmailSettingsettings").validate({
+
+            rules: {
+                gmail_from: {
+                required: true,
+                email:true,
+
+              },
+
+           
+
+              },
+              //For custom messages
+              messages: {
+
+              },
+              errorElement : 'div',
+              errorPlacement: function(error, element) {
+                var placement = $(element).data('error');
+                if (placement) {
+                  $(placement).append(error)
+                } else {
+              error.insertAfter(element);
+              }
+            }
+
+          });
+    });
+
 
 
 });

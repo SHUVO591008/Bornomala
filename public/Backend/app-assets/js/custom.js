@@ -1262,11 +1262,12 @@ $(document).on('click','#admissionSearchBtn',function(){
 var class_id = $('#class_id30').val();
 var section_id = $('#section_id30').val();
 var session_id = $('#year').val();
+var status_stu = $('#status_stu').val();
 
     $.ajax({
         url:"/admission/search",
         type:"get",
-        data:{'session_id':session_id,'class_id':class_id,'section_id':section_id},
+        data:{'session_id':session_id,'class_id':class_id,'section_id':section_id,'status_stu':status_stu},
         beforeSend:function(){
         },
         success:function(data){

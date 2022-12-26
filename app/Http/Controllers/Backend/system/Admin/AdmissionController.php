@@ -12,16 +12,17 @@ use Auth;
 
 class AdmissionController extends Controller
 {
-    public function __construct()
-    {
-       $this->middleware('auth:webadmin');
-    }
+    
+public function __construct()
+{
+    $this->middleware('auth:webadmin');
+}
 
-     public function NewAdmission()
-    {
+public function NewAdmission()
+{
 
-        return view('Backend.system.admission.admission');
-    }
+    return view('Backend.system.admission.admission');
+}
 
 
     public function fee(Request $request){
@@ -274,10 +275,13 @@ public function search(Request $request)
 {
      if($request->ajax()){
 
+ 
+
         $request->validate([
             'class_id' => 'required',
             'section_id' => 'required',
             'session_id' => 'required',
+            'status_stu' =>'required|in:active,inactive',
 
 
             ],
@@ -300,6 +304,7 @@ public function search(Request $request)
                         ->where('admissions.class_id',$class_id)
                         ->where('admissions.section_id',$section_id)
                         ->where('admissions.year_id',$session_id)
+                        ->where('admissions.status',$request->status_stu)
                          ->select('classes.*','sections.*','years.*','admissions.*')
                         ->get();
     
@@ -330,7 +335,7 @@ public function search(Request $request)
     foreach ($searchAdmission as $key => $v) {
 
         $prodID= Crypt::encrypt($v->id); 
-        $selected = ($v->status==1)?"checked":"";
+        $selected = ($v->status=='active')?"checked":"";
      
         $html[$key]['tdsource'] = '<td>'.($key+1).'</td>';
 
@@ -363,9 +368,9 @@ public function search(Request $request)
 
         $html[$key]['tdsource'] .= '<td>';
         $html[$key]['tdsource'] .= '<div class="switch">
-            <label>
+            <label>s
               <span>Inactive</span>
-            <input data-column="'.route("course.status").'" class="status course" data-id="'.$prodID.'" id="status'.($key+1).'" 
+            <input data-column="'.route("status.admission").'" class="status course" data-id="'.$prodID.'" id="status'.($key+1).'" 
                '.$selected.' type="checkbox">
               <span class="lever"></span>
               <span>Active</span>
@@ -492,6 +497,7 @@ public function status(Request $request)
     if($request->isMethod('post')){
 
         $decryptedID = Crypt::decrypt($request->dataId);
+
         $check = DB::table('admissions')->where('id',$decryptedID)->first();
 
         if(is_null($check)){
@@ -681,7 +687,7 @@ public function UpdateAdmission(Request $request,$id)
 
         }
 
-    }
+}
 
 
 public function ViewAdmission($id){
@@ -706,6 +712,9 @@ public function ViewAdmission($id){
         return view('Backend.system.admission.view_admission',compact('data','social'));
     
 }
+
+
+
     
 
 

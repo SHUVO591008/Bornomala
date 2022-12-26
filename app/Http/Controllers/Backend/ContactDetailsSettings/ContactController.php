@@ -375,7 +375,7 @@ class ContactController extends Controller
 
     public function store(Request $request)
     {
-        $getip = UserSystemInfoHelper::get_ip();
+        //$getip = UserSystemInfoHelper::get_ip();
         //$getbrowser = UserSystemInfoHelper::get_browsers();
         $getdevice = UserSystemInfoHelper::get_device();
         //$getos = UserSystemInfoHelper::get_os();
